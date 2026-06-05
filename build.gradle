@@ -1,0 +1,59 @@
+plugins {
+  id 'java-library'
+  id 'com.vanniktech.maven.publish' version '0.36.0'
+}
+
+group = 'ai.axhub'
+version = '0.1.0'
+
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
+
+dependencies { implementation 'com.google.code.gson:gson:2.14.0' }
+
+tasks.withType(Javadoc).configureEach {
+  options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+mavenPublishing {
+  publishToMavenCentral(true)
+  signAllPublications()
+  coordinates(group.toString(), 'axhub-sdk-java', version.toString())
+  pom {
+    name = 'AX Hub Java SDK'
+    description = 'Java SDK for AX Hub API route facades, error metadata, and conformance-tested client behavior.'
+    inceptionYear = '2026'
+    url = 'https://github.com/jocoding-ax-partners/axhub-sdk-java'
+    licenses {
+      license {
+        name = 'The Apache License, Version 2.0'
+        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+        distribution = 'repo'
+      }
+    }
+    developers {
+      developer {
+        id = 'jocoding-ax-partners'
+        name = 'Jocoding AX Partners'
+        url = 'https://github.com/jocoding-ax-partners'
+      }
+    }
+    scm {
+      url = 'https://github.com/jocoding-ax-partners/axhub-sdk-java'
+      connection = 'scm:git:https://github.com/jocoding-ax-partners/axhub-sdk-java.git'
+      developerConnection = 'scm:git:ssh://git@github.com/jocoding-ax-partners/axhub-sdk-java.git'
+    }
+  }
+}
+
+tasks.register('regressionTest', JavaExec) {
+  dependsOn sourceSets.test.runtimeClasspath
+  classpath = sourceSets.test.runtimeClasspath
+  mainClass = 'ai.axhub.sdk.RegressionTest'
+}
+check.dependsOn regressionTest
+
+sourceSets { example { java.srcDir 'examples/test-app/src/main/java'; compileClasspath += sourceSets.main.output + configurations.runtimeClasspath; runtimeClasspath += output + compileClasspath } }
+tasks.register('testApp', JavaExec) { dependsOn 'compileExampleJava'; classpath = sourceSets.example.runtimeClasspath; mainClass = 'ai.axhub.sdk.example.App' }
+check.dependsOn testApp
+
+tasks.named('test') { enabled = false }
