@@ -12,11 +12,13 @@ public final class RegressionTest {
     testTenantRequiredBeforeRequest();
     testErrorAndRouteCoverage();
     testNestedJsonAndErrorMetadata();
+    testNonJsonSuccessAndScalarErrorBodies();
     testTokenRedaction();
     testEightContextCoverage();
     OperationsCoverageTest.run();
     AllOperationsE2ETest.run();
     ConformanceRunner.run();
+    if ("1".equals(System.getenv("AXHUB_LIVE_ALL_METHODS"))) LiveAllOperationsE2ETest.run();
   }
   static void testAppsCreateConformance() throws Exception {
     final String[] seen = new String[4];
@@ -73,6 +75,31 @@ public final class RegressionTest {
       require(((Map<?,?>) ((List<?>) got.get("items")).get(0)).get("childValue").equals("ok"), "array response was not camelized: " + got);
       try { client.request("appsGetApiV1AppsByAppID", Map.of("appID", "error"), Map.of(), null); throw new AssertionError("expected error"); }
       catch (AxHubException e) { require("req_java".equals(e.requestId()) && e.retryable(), "error metadata drift: " + e.requestId() + " retry=" + e.retryable()); }
+    } finally { server.stop(0); }
+  }
+
+  static void testNonJsonSuccessAndScalarErrorBodies() throws Exception {
+    HttpServer server = HttpServer.create(new InetSocketAddress(0), 0);
+    server.createContext("/", exchange -> {
+      byte[] body;
+      if (exchange.getRequestURI().getPath().equals("/auth/google_oauth2/start")) {
+        body = "<html>oauth redirect target</html>".getBytes();
+        exchange.getResponseHeaders().set("Content-Type", "text/html");
+        exchange.sendResponseHeaders(200, body.length);
+      } else {
+        body = "\"invalid_request\"".getBytes();
+        exchange.getResponseHeaders().set("Content-Type", "application/json");
+        exchange.sendResponseHeaders(400, body.length);
+      }
+      try (OutputStream os = exchange.getResponseBody()) { os.write(body); }
+    });
+    server.start();
+    try {
+      AxHubClient client = AxHubClient.builder().baseUrl("http://127.0.0.1:" + server.getAddress().getPort()).build();
+      Map<String,Object> got = client.request("authGetAuthGoogleOauth2Start", Map.of(), Map.of(), null);
+      require("<html>oauth redirect target</html>".equals(got.get("raw")), "non-json success raw drift " + got);
+      try { client.request("authPostOauthToken", Map.of(), Map.of(), Map.of("noop", true)); throw new AssertionError("expected scalar error"); }
+      catch (AxHubException e) { require(e.status() == 400 && "http_400".equals(e.code()), "scalar error body drift " + e); }
     } finally { server.stop(0); }
   }
 

@@ -169,9 +169,22 @@ public final class AxHubClient {
 
   static final class Json {
     static Map<String, Object> parseObject(String json) {
-      if (json == null || json.isBlank()) return new LinkedHashMap<>();
-      Map<String, Object> parsed = GSON.fromJson(json, MAP_TYPE);
-      return parsed == null ? new LinkedHashMap<>() : parsed;
+      Map<String, Object> out = new LinkedHashMap<>();
+      if (json == null || json.isBlank()) return out;
+      try {
+        JsonElement parsed = JsonParser.parseString(json);
+        if (parsed.isJsonObject()) {
+          Map<String, Object> obj = GSON.fromJson(parsed, MAP_TYPE);
+          return obj == null ? out : obj;
+        }
+        if (parsed.isJsonArray()) out.put("value", GSON.fromJson(parsed, Object.class));
+        else if (parsed.isJsonPrimitive()) out.put("value", GSON.fromJson(parsed, Object.class));
+        else out.put("value", null);
+        return out;
+      } catch (RuntimeException ignored) {
+        out.put("raw", json);
+        return out;
+      }
     }
     static Map<String, Object> camelize(Map<String, Object> in) {
       Map<String, Object> out = new LinkedHashMap<>();
