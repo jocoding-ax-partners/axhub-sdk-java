@@ -15,6 +15,7 @@ public final class RegressionTest {
     testTokenRedaction();
     testEightContextCoverage();
     OperationsCoverageTest.run();
+    AllOperationsE2ETest.run();
     ConformanceRunner.run();
   }
   static void testAppsCreateConformance() throws Exception {
