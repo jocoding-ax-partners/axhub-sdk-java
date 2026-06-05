@@ -55,7 +55,6 @@ jobs:
     needs: publish
     runs-on: ubuntu-latest
     timeout-minutes: 35
-    continue-on-error: true
     steps:
       - name: Wait for Maven Central artifact
         run: |
@@ -63,7 +62,12 @@ jobs:
           version="${version#v}"
           url="https://repo1.maven.org/maven2/ai/axhub/axhub-sdk-java/$version/axhub-sdk-java-$version.pom"
           for i in $(seq 1 30); do
-            curl -fsS "$url" && exit 0
+            if curl -fsS "$url"; then
+              echo "Published artifact is visible on Maven Central: $url"
+              exit 0
+            fi
+            echo "Maven Central artifact not visible yet (attempt $i/30); retrying"
             sleep 60
           done
+          echo "Published artifact did not become visible on Maven Central: $url"
           exit 1
