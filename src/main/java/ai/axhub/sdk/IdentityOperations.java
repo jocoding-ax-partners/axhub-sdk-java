@@ -36,6 +36,12 @@ public final class IdentityOperations {
   public CompletableFuture<Map<String, Object>> authGetApiV1MeAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("authGetApiV1Me", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> authPostApiV1MeInvitationsByInvitationIDAccept(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authPostApiV1MeInvitationsByInvitationIDAccept", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> authPostApiV1MeInvitationsByInvitationIDAcceptAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authPostApiV1MeInvitationsByInvitationIDAccept", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> authGetApiV1OauthClientsByClientID(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("authGetApiV1OauthClientsByClientID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
@@ -143,6 +149,12 @@ public final class IdentityOperations {
   }
   public CompletableFuture<Map<String, Object>> authGetOauthAuthorizeAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("authGetOauthAuthorize", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> authPostOauthAuthorizeTenant(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authPostOauthAuthorizeTenant", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> authPostOauthAuthorizeTenantAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authPostOauthAuthorizeTenant", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public Map<String, Object> authPostOauthDeviceAuthorization(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("authPostOauthDeviceAuthorization", RouteOperations.map(pathParams), RouteOperations.map(query), body);

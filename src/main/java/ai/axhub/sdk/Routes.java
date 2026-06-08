@@ -65,10 +65,13 @@ public final class Routes { private Routes() {} public static final List<Route> 
   new Route("GET", "/api/v1/engines", "Gateway", "gatewayGetApiV1Engines"),
   new Route("GET", "/api/v1/github/accounts", "deploy", "deployGetApiV1GithubAccounts"),
   new Route("GET", "/api/v1/github/installations/{installationID}/repositories", "deploy", "deployGetApiV1GithubInstallationsByInstallationIDRepositories"),
+  new Route("GET", "/api/v1/invite-links/{token}", "Tenants", "tenantsGetApiV1InviteLinksByToken"),
+  new Route("POST", "/api/v1/invite-links/{token}/accept", "Tenants", "tenantsPostApiV1InviteLinksByTokenAccept"),
   new Route("GET", "/api/v1/me", "Auth", "authGetApiV1Me"),
   new Route("GET", "/api/v1/me/apps/owned", "Apps", "appsGetApiV1MeAppsOwned"),
   new Route("GET", "/api/v1/me/apps/received", "Apps", "appsGetApiV1MeAppsReceived"),
   new Route("GET", "/api/v1/me/apps/workspace", "Apps", "appsGetApiV1MeAppsWorkspace"),
+  new Route("POST", "/api/v1/me/invitations/{invitationID}/accept", "Auth", "authPostApiV1MeInvitationsByInvitationIDAccept"),
   new Route("GET", "/api/v1/me/personal-access-tokens", "Schema", "schemaGetApiV1MePersonalAccessTokens"),
   new Route("POST", "/api/v1/me/personal-access-tokens", "Schema", "schemaPostApiV1MePersonalAccessTokens"),
   new Route("DELETE", "/api/v1/me/personal-access-tokens/{patID}", "Schema", "schemaDeleteApiV1MePersonalAccessTokensByPatID"),
@@ -110,7 +113,15 @@ public final class Routes { private Routes() {} public static final List<Route> 
   new Route("PATCH", "/api/v1/tenants/{tenantID}/connectors/{connectorID}", "Gateway", "gatewayPatchApiV1TenantsByTenantIDConnectorsByConnectorID"),
   new Route("POST", "/api/v1/tenants/{tenantID}/connectors/{connectorID}/credentials", "Gateway", "gatewayPostApiV1TenantsByTenantIDConnectorsByConnectorIDCredentials"),
   new Route("GET", "/api/v1/tenants/{tenantID}/connectors/{connectorID}/discover", "Gateway", "gatewayGetApiV1TenantsByTenantIDConnectorsByConnectorIDDiscover"),
+  new Route("GET", "/api/v1/tenants/{tenantID}/cost/by-app", "Cost", "costGetApiV1TenantsByTenantIDCostByApp"),
+  new Route("GET", "/api/v1/tenants/{tenantID}/cost/by-cost-center", "Cost", "costGetApiV1TenantsByTenantIDCostByCostCenter"),
+  new Route("GET", "/api/v1/tenants/{tenantID}/cost/export", "Cost", "costGetApiV1TenantsByTenantIDCostExport"),
+  new Route("GET", "/api/v1/tenants/{tenantID}/cost/summary", "Cost", "costGetApiV1TenantsByTenantIDCostSummary"),
+  new Route("GET", "/api/v1/tenants/{tenantID}/cost/timeseries", "Cost", "costGetApiV1TenantsByTenantIDCostTimeseries"),
   new Route("GET", "/api/v1/tenants/{tenantID}/discover/apps", "Apps", "appsGetApiV1TenantsByTenantIDDiscoverApps"),
+  new Route("GET", "/api/v1/tenants/{tenantID}/email-domains", "Tenants", "tenantsGetApiV1TenantsByTenantIDEmailDomains"),
+  new Route("POST", "/api/v1/tenants/{tenantID}/email-domains", "Tenants", "tenantsPostApiV1TenantsByTenantIDEmailDomains"),
+  new Route("DELETE", "/api/v1/tenants/{tenantID}/email-domains/{domain}", "Tenants", "tenantsDeleteApiV1TenantsByTenantIDEmailDomainsByDomain"),
   new Route("POST", "/api/v1/tenants/{tenantID}/gateway/query", "Gateway", "gatewayPostApiV1TenantsByTenantIDGatewayQuery"),
   new Route("GET", "/api/v1/tenants/{tenantID}/grants", "Authorization", "authorizationGetApiV1TenantsByTenantIDGrants"),
   new Route("POST", "/api/v1/tenants/{tenantID}/grants/{grantID}/grant", "Authorization", "authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrant"),
@@ -125,6 +136,9 @@ public final class Routes { private Routes() {} public static final List<Route> 
   new Route("POST", "/api/v1/tenants/{tenantID}/invitations", "Tenants", "tenantsPostApiV1TenantsByTenantIDInvitations"),
   new Route("DELETE", "/api/v1/tenants/{tenantID}/invitations/{invitationID}", "Tenants", "tenantsDeleteApiV1TenantsByTenantIDInvitationsByInvitationID"),
   new Route("POST", "/api/v1/tenants/{tenantID}/invitations/bulk", "Tenants", "tenantsPostApiV1TenantsByTenantIDInvitationsBulk"),
+  new Route("GET", "/api/v1/tenants/{tenantID}/invite-links", "Tenants", "tenantsGetApiV1TenantsByTenantIDInviteLinks"),
+  new Route("POST", "/api/v1/tenants/{tenantID}/invite-links", "Tenants", "tenantsPostApiV1TenantsByTenantIDInviteLinks"),
+  new Route("DELETE", "/api/v1/tenants/{tenantID}/invite-links/{linkID}", "Tenants", "tenantsDeleteApiV1TenantsByTenantIDInviteLinksByLinkID"),
   new Route("GET", "/api/v1/tenants/{tenantID}/members", "Tenants", "tenantsGetApiV1TenantsByTenantIDMembers"),
   new Route("PATCH", "/api/v1/tenants/{tenantID}/members/{membershipID}", "Tenants", "tenantsPatchApiV1TenantsByTenantIDMembersByMembershipID"),
   new Route("POST", "/api/v1/tenants/{tenantID}/members/{membershipID}/deactivate", "Tenants", "tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDDeactivate"),
@@ -169,6 +183,7 @@ public final class Routes { private Routes() {} public static final List<Route> 
   new Route("PATCH", "/data/{tenantSlug}/{appSlug}/{table}/{id}", "Schema", "schemaPatchDataByTenantSlugByAppSlugByTableById"),
   new Route("GET", "/internal/app-access", "Apps", "appsGetInternalAppAccess"),
   new Route("GET", "/oauth/authorize", "Auth", "authGetOauthAuthorize"),
+  new Route("POST", "/oauth/authorize/tenant", "Auth", "authPostOauthAuthorizeTenant"),
   new Route("POST", "/oauth/device_authorization", "Auth", "authPostOauthDeviceAuthorization"),
   new Route("POST", "/oauth/device/authorize", "Auth", "authPostOauthDeviceAuthorize"),
   new Route("GET", "/oauth/device/lookup", "Auth", "authGetOauthDeviceLookup"),
@@ -176,8 +191,10 @@ public final class Routes { private Routes() {} public static final List<Route> 
   new Route("POST", "/oauth/revoke", "Auth", "authPostOauthRevoke"),
   new Route("POST", "/oauth/token", "Auth", "authPostOauthToken"),
   new Route("GET", "/oauth/userinfo", "Auth", "authGetOauthUserinfo"),
-  new Route("GET", "/tenants/{tenantID}/email-domains", "Tenants", "tenantsGetTenantsByTenantIDEmailDomains"),
-  new Route("POST", "/tenants/{tenantID}/email-domains", "Tenants", "tenantsPostTenantsByTenantIDEmailDomains"),
-  new Route("DELETE", "/tenants/{tenantID}/email-domains/{domain}", "Tenants", "tenantsDeleteTenantsByTenantIDEmailDomainsByDomain"),
   new Route("POST", "/webhooks/github", "Deploy", "deployPostWebhooksGithub")
-); public static Route byOperation(String id) { return ALL.stream().filter(r -> r.operationId().equals(id)).findFirst().orElseThrow(() -> new IllegalArgumentException("unknown operation " + id)); } }
+);
+
+  public static Route byOperation(String operationId) {
+    return ALL.stream().filter(route -> route.operationId().equals(operationId)).findFirst().orElseThrow(() -> new IllegalArgumentException("unknown operation " + operationId));
+  }
+}
