@@ -23,6 +23,7 @@ public final class ErrorCodes { private ErrorCodes() {} public static final Map<
   Map.entry("empty", new ErrorInfo("validation", 400, false)),
   Map.entry("forbidden", new ErrorInfo("permission_denied", 403, false)),
   Map.entry("internal_error", new ErrorInfo("internal", 500, false)),
+  Map.entry("invalid_expiry", new ErrorInfo("validation", 400, false)),
   Map.entry("invalid_format", new ErrorInfo("validation", 400, false)),
   Map.entry("invalid_state_transition", new ErrorInfo("conflict", 409, false)),
   Map.entry("invalid_value", new ErrorInfo("validation", 400, false)),

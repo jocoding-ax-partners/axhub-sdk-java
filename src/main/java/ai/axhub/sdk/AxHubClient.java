@@ -17,12 +17,18 @@ import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public final class AxHubClient {
   private static final Gson GSON = new Gson();
   private static final Type MAP_TYPE = new TypeToken<LinkedHashMap<String, Object>>() {}.getType();
+  private static final Set<String> FORM_ENCODED_OPERATIONS = Set.of(
+      "authPostOauthDeviceAuthorization",
+      "authPostOauthRevoke",
+      "authPostOauthToken"
+  );
 
   private final String baseUrl;
   private final String token;
@@ -36,6 +42,7 @@ public final class AxHubClient {
   private final AuthzOperations authz;
   private final AuditOperations audit;
   private final GatewayOperations gateway;
+  private final CostOperations cost;
   private final DataOperations data;
   private final DeploymentsOperations deployments;
 
@@ -44,7 +51,10 @@ public final class AxHubClient {
     this.token = b.token;
     this.tokenType = b.tokenType;
     this.defaultTenantId = b.defaultTenantId;
-    this.http = b.http == null ? HttpClient.newHttpClient() : b.http;
+    if (b.http != null && b.http.followRedirects() != HttpClient.Redirect.NEVER) {
+      throw new IllegalArgumentException("AxHubClient requires HttpClient.Redirect.NEVER to avoid auth header leakage on redirects");
+    }
+    this.http = b.http == null ? HttpClient.newBuilder().followRedirects(HttpClient.Redirect.NEVER).build() : b.http;
     this.apps = new AppsClient(this);
     this.appsRoutes = new AppsOperations(this);
     this.identity = new IdentityOperations(this);
@@ -52,6 +62,7 @@ public final class AxHubClient {
     this.authz = new AuthzOperations(this);
     this.audit = new AuditOperations(this);
     this.gateway = new GatewayOperations(this);
+    this.cost = new CostOperations(this);
     this.data = new DataOperations(this);
     this.deployments = new DeploymentsOperations(this);
   }
@@ -64,6 +75,7 @@ public final class AxHubClient {
   public AuthzOperations authz() { return authz; }
   public AuditOperations audit() { return audit; }
   public GatewayOperations gateway() { return gateway; }
+  public CostOperations cost() { return cost; }
   public DataOperations data() { return data; }
   public DeploymentsOperations deployments() { return deployments; }
   public String baseUrl() { return baseUrl; }
@@ -115,11 +127,19 @@ public final class AxHubClient {
       else if (tokenType == TokenType.JWT) rb.header("Authorization", "Bearer " + token);
       else throw new AxHubException("validation", "required", "tokenType must be explicit", 0, false);
     }
-    String rawBody = body == null ? "" : GSON.toJson(body);
-    if (body != null) rb.header("Content-Type", "application/json");
+    String rawBody = body == null ? "" : FORM_ENCODED_OPERATIONS.contains(operationId) ? formBody(body) : GSON.toJson(body);
+    if (body != null) {
+      rb.header("Content-Type", FORM_ENCODED_OPERATIONS.contains(operationId) ? "application/x-www-form-urlencoded" : "application/json");
+    }
     rb.method(route.method(), body == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofString(rawBody));
     try {
       HttpResponse<String> res = http.send(rb.build(), HttpResponse.BodyHandlers.ofString());
+      if (res.statusCode() >= 300 && res.statusCode() < 400) {
+        Map<String, Object> redirect = new LinkedHashMap<>();
+        redirect.put("status", res.statusCode());
+        redirect.put("location", res.headers().firstValue("Location").orElse(null));
+        return redirect;
+      }
       if (res.statusCode() >= 400) throw parseError(res.statusCode(), res.body());
       return Json.camelize(Json.parseObject(res.body()));
     } catch (IOException e) {
@@ -165,6 +185,15 @@ public final class AxHubClient {
   }
   private static String trim(String s) { return s.endsWith("/") ? s.substring(0, s.length() - 1) : s; }
   private static String enc(String s) { return URLEncoder.encode(s, StandardCharsets.UTF_8).replace("+", "%20"); }
+  private static String formBody(Object body) {
+    if (!(body instanceof Map<?, ?> map)) return "";
+    StringBuilder out = new StringBuilder();
+    for (var e : map.entrySet()) {
+      if (out.length() > 0) out.append('&');
+      out.append(enc(String.valueOf(e.getKey()))).append('=').append(enc(e.getValue() == null ? "" : String.valueOf(e.getValue())));
+    }
+    return out.toString();
+  }
   private static String requestId() { return (Instant.now().toEpochMilli() + UUID.randomUUID().toString().replace("-", "")).substring(0, 26); }
 
   static final class Json {
