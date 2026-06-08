@@ -45,6 +45,9 @@ jobs:
         run: ./gradlew check --no-configuration-cache
       - name: Local publish dry-run
         run: ./gradlew publishToMavenLocal --no-configuration-cache
+        env:
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_SIGNING_PASSWORD }}
 
   publish:
     needs: verify
