@@ -73,9 +73,6 @@ public final class DataTableClient {
     rejectLegacyPageOptions(opts);
     int resolvedPage = resolveOffsetPage(opts.cursor, opts.page);
     Integer perPage = clampPerPage(opts.pageSize != null ? opts.pageSize : opts.limit);
-    // Checked after cursor/page validation so a malformed cursor still surfaces
-    // first (mirrors node/python ordering).
-    requireWhereFilter(opts.where, "list");
     Map<String, Object> query = new LinkedHashMap<>(WhereSerializer.serializeWhere(opts.where));
     if (perPage != null) query.put("per_page", String.valueOf(perPage));
     if (resolvedPage != 1) query.put("page", String.valueOf(resolvedPage));
@@ -84,7 +81,7 @@ public final class DataTableClient {
     String select = Projection.serializeSelect(opts.select);
     if (select != null) query.put("_select", select);
 
-    Map<String, Object> raw = client.requestRaw("GET", path(), query, null, false);
+    Map<String, Object> raw = mapWhereRequired("list", () -> client.requestRaw("GET", path(), query, null, false));
     List<?> rawItems = raw.get("items") instanceof List<?> l ? l : List.of();
     List<Map<String, Object>> items = Projection.projectRows(rawItems, opts.select);
     // NOTE: mirrors node behavior — current_page falls back to the requested
@@ -137,9 +134,7 @@ public final class DataTableClient {
   }
 
   public int count(Map<String, Object> where) {
-    // Same mass-scan guard as list() — the backend 400s an unfiltered count.
-    requireWhereFilter(where, "count");
-    Map<String, Object> raw = client.requestRaw("GET", path() + "/_count", WhereSerializer.serializeWhere(where), null, false);
+    Map<String, Object> raw = mapWhereRequired("count", () -> client.requestRaw("GET", path() + "/_count", WhereSerializer.serializeWhere(where), null, false));
     Object n = raw.get("count");
     return n instanceof Number num ? num.intValue() : 0;
   }
@@ -222,17 +217,23 @@ public final class DataTableClient {
 
   /**
    * The AxHub data ring rejects an unfiltered list/count with HTTP 400
-   * ("최소 1개의 WHERE 필터가 필요해요") as a deliberate mass-scan guard — confirmed
-   * against the live backend 2026-06 and mirrored by the {@code axhub data} CLI.
-   * Fail fast SDK-side with an actionable message instead of letting the raw 400
-   * leak (mirrors node requireWhereFilter and the Python port's guard).
+   * ("최소 1개의 WHERE 필터가 필요해요") on NON-owner-scoped tables, but ACCEPTS
+   * unfiltered calls on owner-scoped tables (rows auto-scope to the caller) —
+   * both confirmed live 2026-06. A client pre-check cannot tell them apart
+   * (0.3.0 regression), so the request goes through and only the backend 400 is
+   * normalized into the same actionable error (mirrors node/python/go/ruby).
    */
-  private static void requireWhereFilter(Map<String, Object> where, String op) {
-    if (where == null) {
-      throw new DataErrors.ValidationError(
-          "AxHub data " + op + " requires at least one WHERE filter "
-              + "(the backend rejects unfiltered scans). Pass `where: ...`.",
-          "where_required");
+  private static <T> T mapWhereRequired(String op, java.util.function.Supplier<T> run) {
+    try {
+      return run.get();
+    } catch (ai.axhub.sdk.AxHubException e) {
+      if ("required".equals(e.code()) && e.status() == 400) {
+        throw new DataErrors.ValidationError(
+            "AxHub data " + op + " requires at least one WHERE filter on this table "
+                + "(the backend rejects unfiltered scans on non-owner-scoped tables). Pass `where: ...`.",
+            "where_required");
+      }
+      throw e;
     }
   }
 

@@ -87,8 +87,8 @@ public final class DataLayerTest {
     testServer("cursorBadPageRejected", DataLayerTest::testBadPageRejected);
     test("isV2CursorHelper", DataLayerTest::testIsV2CursorHelper);
     // --- where-required mass-scan guard (Fix A) ---
-    testServer("listFilterlessRejectedBeforeNetwork", DataLayerTest::testListFilterlessRejected);
-    testServer("countFilterlessRejectedBeforeNetwork", DataLayerTest::testCountFilterlessRejected);
+    testServer("listFilterlessRejectedBeforeNetwork", DataLayerTest::testFilterlessListPassesForOwnerScopedTables);
+    testServer("countFilterlessRejectedBeforeNetwork", DataLayerTest::testBackendWhereRequired400MapsToValidationError);
     // --- list wire ---
     testServer("listQueryAndEnvelope", DataLayerTest::testListQueryAndEnvelope);
     testServer("listRowDataVerbatimNoCamelize", DataLayerTest::testRowDataVerbatim);
@@ -290,17 +290,25 @@ public final class DataLayerTest {
     expect(DataErrors.InvalidCursorError.class, () -> table(s).list(ListOptions.create().page(0)));
   }
 
-  static void testListFilterlessRejected(MockServer s) {
-    // The backend 400s an unfiltered scan; the SDK fails fast BEFORE any HTTP call.
-    DataErrors.ValidationError e = expect(DataErrors.ValidationError.class, () -> table(s).list());
-    require("where_required".equals(e.code()), "where_required code drift " + e.code());
-    require(s.path == null, "filterless list must not hit the network, but server saw " + s.path);
+  static void testFilterlessListPassesForOwnerScopedTables(MockServer s) {
+    // Live contract 2026-06: the backend ACCEPTS unfiltered list/count on
+    // owner-scoped tables (rows auto-scope to the caller). The 0.3.0 client-side
+    // pre-check wrongly blocked this — filterless calls must reach the wire.
+    s.setResponse(200, "{\"items\":[{\"id\":\"mine\"}],\"has_more\":false}");
+    PaginatedList page = table(s).list();
+    require(page.items.size() == 1 && "mine".equals(page.items.get(0).get("id")),
+        "owner-scoped filterless list should pass, got " + page.items);
   }
 
-  static void testCountFilterlessRejected(MockServer s) {
-    DataErrors.ValidationError e = expect(DataErrors.ValidationError.class, () -> table(s).count());
+  static void testBackendWhereRequired400MapsToValidationError(MockServer s) {
+    // Non-owner-scoped tables still get the mass-scan guard — server-side. The
+    // SDK maps that 400 (code=required) onto the same actionable error.
+    s.setResponse(400, "{\"error\":{\"message\":\"최소 1개의 WHERE 필터가 필요해요\",\"code\":\"required\","
+        + "\"category\":\"validation\",\"retryable\":false,\"fields\":[{\"name\":\"where\",\"code\":\"required\"}]}}");
+    DataErrors.ValidationError e = expect(DataErrors.ValidationError.class, () -> table(s).list());
     require("where_required".equals(e.code()), "where_required code drift " + e.code());
-    require(s.path == null, "filterless count must not hit the network, but server saw " + s.path);
+    DataErrors.ValidationError e2 = expect(DataErrors.ValidationError.class, () -> table(s).count());
+    require("where_required".equals(e2.code()), "where_required code drift " + e2.code());
   }
 
   static void testListQueryAndEnvelope(MockServer s) {
