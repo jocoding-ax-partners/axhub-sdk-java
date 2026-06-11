@@ -7,7 +7,7 @@ AX Hub Java SDK for `https://api.axhub.ai`. It exposes generated route metadata,
 Gradle:
 
 ```groovy
-implementation 'ai.axhub:axhub-sdk-java:0.3.1'
+implementation 'ai.axhub:axhub-sdk-java:0.4.0'
 ```
 
 Maven:
@@ -16,7 +16,7 @@ Maven:
 <dependency>
   <groupId>ai.axhub</groupId>
   <artifactId>axhub-sdk-java</artifactId>
-  <version>0.3.1</version>
+  <version>0.4.0</version>
 </dependency>
 ```
 
