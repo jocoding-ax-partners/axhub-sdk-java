@@ -65,7 +65,7 @@ public class Main {
         "name", "Agent Java README QA",
         "visibility", "private",
         "auth_mode", "anonymous",
-        "resource_tier", "S",
+        "resource_preset", "S",
         "deploy_method", "docker",
         "subdomain", slug
     ));

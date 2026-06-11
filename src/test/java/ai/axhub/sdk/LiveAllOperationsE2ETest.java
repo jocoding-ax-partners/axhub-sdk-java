@@ -37,7 +37,7 @@ final class LiveAllOperationsE2ETest {
     String tenantId = getenv("AXHUB_LIVE_TENANT_ID", "cc1e58f1-8e46-4ac7-96c1-190c4cdd5b70");
     String tenantSlug = getenv("AXHUB_LIVE_TENANT_SLUG", "test");
     String baseUrl = getenv("AXHUB_LIVE_BASE_URL", "https://api.axhub.ai");
-    require(Routes.ALL.size() == 189, "route coverage drift " + Routes.ALL.size());
+    require(Routes.ALL.size() == 185, "route coverage drift " + Routes.ALL.size());
     AxHubClient client = AxHubClient.builder().baseUrl(baseUrl).token(token).tokenType(TokenType.PAT).defaultTenantId(tenantId).build();
     Map<String, String> fixture = new HashMap<>();
     boolean createdFixture = false;
@@ -110,7 +110,7 @@ final class LiveAllOperationsE2ETest {
     summary.put("exceptions", filter(results, r -> "exception".equals(r.get("kind"))));
     summary.put("results", results);
     if (System.getenv("AXHUB_LIVE_RESULT_PATH") != null) writeResult(System.getenv("AXHUB_LIVE_RESULT_PATH"), summary);
-    require(results.size() == 189, "total drift " + results.size());
+    require(results.size() == 185, "total drift " + results.size());
     int expectedDestructive = 0;
     for (Route route : Routes.ALL) if (!"GET".equals(route.method())) expectedDestructive++;
     require((int) summary.get("destructive") == expectedDestructive, "destructive method count drift " + summary.get("destructive") + " != " + expectedDestructive);

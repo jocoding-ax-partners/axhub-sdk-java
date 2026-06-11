@@ -210,6 +210,12 @@ public final class AppsOperations {
   public CompletableFuture<Map<String, Object>> appsGetApiV1MeAppsWorkspaceAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("appsGetApiV1MeAppsWorkspace", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> appsGetApiV1ResourcePresets(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsGetApiV1ResourcePresets", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsGetApiV1ResourcePresetsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsGetApiV1ResourcePresets", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> appsGetApiV1ReviewRequestsByRrID(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("appsGetApiV1ReviewRequestsByRrID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }

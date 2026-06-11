@@ -96,6 +96,12 @@ public final class DeploymentsOperations {
   public CompletableFuture<Map<String, Object>> deployGetApiV1TenantsByTenantIDAppBootstrapsByBootstrapIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("deployGetApiV1TenantsByTenantIDAppBootstrapsByBootstrapID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> deployGetApiV1TenantsByTenantIDDeployments(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("deployGetApiV1TenantsByTenantIDDeployments", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> deployGetApiV1TenantsByTenantIDDeploymentsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("deployGetApiV1TenantsByTenantIDDeployments", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> deployPostWebhooksGithub(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("deployPostWebhooksGithub", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }

@@ -24,6 +24,12 @@ public final class CostOperations {
   public CompletableFuture<Map<String, Object>> costGetApiV1TenantsByTenantIDCostExportAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("costGetApiV1TenantsByTenantIDCostExport", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> costGetApiV1TenantsByTenantIDCostMonths(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("costGetApiV1TenantsByTenantIDCostMonths", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> costGetApiV1TenantsByTenantIDCostMonthsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("costGetApiV1TenantsByTenantIDCostMonths", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> costGetApiV1TenantsByTenantIDCostSummary(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("costGetApiV1TenantsByTenantIDCostSummary", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
@@ -35,5 +41,17 @@ public final class CostOperations {
   }
   public CompletableFuture<Map<String, Object>> costGetApiV1TenantsByTenantIDCostTimeseriesAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("costGetApiV1TenantsByTenantIDCostTimeseries", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> costGetApiV1TenantsByTenantIDInfraAppsByAppIDUsageSeries(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("costGetApiV1TenantsByTenantIDInfraAppsByAppIDUsageSeries", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> costGetApiV1TenantsByTenantIDInfraAppsByAppIDUsageSeriesAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("costGetApiV1TenantsByTenantIDInfraAppsByAppIDUsageSeries", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> costGetApiV1TenantsByTenantIDInfraUsage(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("costGetApiV1TenantsByTenantIDInfraUsage", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> costGetApiV1TenantsByTenantIDInfraUsageAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("costGetApiV1TenantsByTenantIDInfraUsage", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
 }

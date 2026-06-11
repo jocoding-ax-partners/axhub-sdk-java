@@ -12,17 +12,59 @@ public final class AuthzOperations {
   public CompletableFuture<Map<String, Object>> authorizationGetApiV1TenantsByTenantIDGrantsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("authorizationGetApiV1TenantsByTenantIDGrants", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
-  public Map<String, Object> authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrant(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrant", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  public Map<String, Object> authorizationPostApiV1TenantsByTenantIDGrants(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authorizationPostApiV1TenantsByTenantIDGrants", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
-  public CompletableFuture<Map<String, Object>> authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrantAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDGrant", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  public CompletableFuture<Map<String, Object>> authorizationPostApiV1TenantsByTenantIDGrantsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authorizationPostApiV1TenantsByTenantIDGrants", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
-  public Map<String, Object> authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDRevoke(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDRevoke", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  public Map<String, Object> authorizationDeleteApiV1TenantsByTenantIDGrantsByGrantID(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authorizationDeleteApiV1TenantsByTenantIDGrantsByGrantID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
-  public CompletableFuture<Map<String, Object>> authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDRevokeAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("authorizationPostApiV1TenantsByTenantIDGrantsByGrantIDRevoke", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  public CompletableFuture<Map<String, Object>> authorizationDeleteApiV1TenantsByTenantIDGrantsByGrantIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authorizationDeleteApiV1TenantsByTenantIDGrantsByGrantID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> authorizationGetApiV1TenantsByTenantIDGrantsByGrantID(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authorizationGetApiV1TenantsByTenantIDGrantsByGrantID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> authorizationGetApiV1TenantsByTenantIDGrantsByGrantIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authorizationGetApiV1TenantsByTenantIDGrantsByGrantID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> authorizationGetApiV1TenantsByTenantIDMeGrants(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authorizationGetApiV1TenantsByTenantIDMeGrants", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> authorizationGetApiV1TenantsByTenantIDMeGrantsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authorizationGetApiV1TenantsByTenantIDMeGrants", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> authorizationGetApiV1TenantsByTenantIDPresets(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authorizationGetApiV1TenantsByTenantIDPresets", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> authorizationGetApiV1TenantsByTenantIDPresetsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authorizationGetApiV1TenantsByTenantIDPresets", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> authorizationPostApiV1TenantsByTenantIDPresets(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authorizationPostApiV1TenantsByTenantIDPresets", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> authorizationPostApiV1TenantsByTenantIDPresetsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authorizationPostApiV1TenantsByTenantIDPresets", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> authorizationDeleteApiV1TenantsByTenantIDPresetsByPresetID(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authorizationDeleteApiV1TenantsByTenantIDPresetsByPresetID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> authorizationDeleteApiV1TenantsByTenantIDPresetsByPresetIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authorizationDeleteApiV1TenantsByTenantIDPresetsByPresetID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> authorizationGetApiV1TenantsByTenantIDPresetsByPresetID(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authorizationGetApiV1TenantsByTenantIDPresetsByPresetID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> authorizationGetApiV1TenantsByTenantIDPresetsByPresetIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authorizationGetApiV1TenantsByTenantIDPresetsByPresetID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> authorizationPatchApiV1TenantsByTenantIDPresetsByPresetID(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authorizationPatchApiV1TenantsByTenantIDPresetsByPresetID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> authorizationPatchApiV1TenantsByTenantIDPresetsByPresetIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authorizationPatchApiV1TenantsByTenantIDPresetsByPresetID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public Map<String, Object> authorizationGetApiV1TenantsByTenantIDSubjects(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("authorizationGetApiV1TenantsByTenantIDSubjects", RouteOperations.map(pathParams), RouteOperations.map(query), body);
@@ -36,58 +78,10 @@ public final class AuthzOperations {
   public CompletableFuture<Map<String, Object>> authorizationPostApiV1TenantsByTenantIDSubjectsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("authorizationPostApiV1TenantsByTenantIDSubjects", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
-  public Map<String, Object> authorizationDeleteApiV1TenantsByTenantIDSubjectsBySubjectID(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("authorizationDeleteApiV1TenantsByTenantIDSubjectsBySubjectID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  public Map<String, Object> authorizationGetApiV1TenantsByTenantIDSubjectsBySubjectID(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authorizationGetApiV1TenantsByTenantIDSubjectsBySubjectID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
-  public CompletableFuture<Map<String, Object>> authorizationDeleteApiV1TenantsByTenantIDSubjectsBySubjectIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("authorizationDeleteApiV1TenantsByTenantIDSubjectsBySubjectID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> authorizationPatchApiV1TenantsByTenantIDSubjectsBySubjectID(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("authorizationPatchApiV1TenantsByTenantIDSubjectsBySubjectID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> authorizationPatchApiV1TenantsByTenantIDSubjectsBySubjectIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("authorizationPatchApiV1TenantsByTenantIDSubjectsBySubjectID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> authorizationPostApiV1TenantsByTenantIDSubjectsBySubjectIDMove(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("authorizationPostApiV1TenantsByTenantIDSubjectsBySubjectIDMove", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> authorizationPostApiV1TenantsByTenantIDSubjectsBySubjectIDMoveAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("authorizationPostApiV1TenantsByTenantIDSubjectsBySubjectIDMove", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> authorizationPostApiV1TenantsByTenantIDSubjectsBySubjectIDTags(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("authorizationPostApiV1TenantsByTenantIDSubjectsBySubjectIDTags", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> authorizationPostApiV1TenantsByTenantIDSubjectsBySubjectIDTagsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("authorizationPostApiV1TenantsByTenantIDSubjectsBySubjectIDTags", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> authorizationDeleteApiV1TenantsByTenantIDSubjectsBySubjectIDTagsByTagID(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("authorizationDeleteApiV1TenantsByTenantIDSubjectsBySubjectIDTagsByTagID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> authorizationDeleteApiV1TenantsByTenantIDSubjectsBySubjectIDTagsByTagIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("authorizationDeleteApiV1TenantsByTenantIDSubjectsBySubjectIDTagsByTagID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> authorizationGetApiV1TenantsByTenantIDTags(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("authorizationGetApiV1TenantsByTenantIDTags", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> authorizationGetApiV1TenantsByTenantIDTagsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("authorizationGetApiV1TenantsByTenantIDTags", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> authorizationPostApiV1TenantsByTenantIDTags(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("authorizationPostApiV1TenantsByTenantIDTags", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> authorizationPostApiV1TenantsByTenantIDTagsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("authorizationPostApiV1TenantsByTenantIDTags", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> authorizationDeleteApiV1TenantsByTenantIDTagsByTagID(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("authorizationDeleteApiV1TenantsByTenantIDTagsByTagID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> authorizationDeleteApiV1TenantsByTenantIDTagsByTagIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("authorizationDeleteApiV1TenantsByTenantIDTagsByTagID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> authorizationPatchApiV1TenantsByTenantIDTagsByTagID(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("authorizationPatchApiV1TenantsByTenantIDTagsByTagID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> authorizationPatchApiV1TenantsByTenantIDTagsByTagIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("authorizationPatchApiV1TenantsByTenantIDTagsByTagID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  public CompletableFuture<Map<String, Object>> authorizationGetApiV1TenantsByTenantIDSubjectsBySubjectIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authorizationGetApiV1TenantsByTenantIDSubjectsBySubjectID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
 }

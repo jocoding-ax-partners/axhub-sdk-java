@@ -12,6 +12,12 @@ public final class IdentityOperations {
   public CompletableFuture<Map<String, Object>> authGetWellKnownJwksJsonAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("authGetWellKnownJwksJson", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> authGetWellKnownOauthAuthorizationServer(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("authGetWellKnownOauthAuthorizationServer", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> authGetWellKnownOauthAuthorizationServerAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("authGetWellKnownOauthAuthorizationServer", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> authGetWellKnownOpenidConfiguration(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("authGetWellKnownOpenidConfiguration", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
