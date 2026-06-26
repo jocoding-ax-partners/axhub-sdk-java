@@ -26,7 +26,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - uses: gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e # gradle/actions/setup-gradle v6.1.0
+      - uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92 # gradle/actions/setup-gradle v6.2.0
       - name: Verify tag commit is on main
         run: |
           git fetch origin main --depth=1
@@ -63,7 +63,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - uses: gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e # gradle/actions/setup-gradle v6.1.0
+      - uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92 # gradle/actions/setup-gradle v6.2.0
       - name: Publish and release to Maven Central
         run: ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
         env:
