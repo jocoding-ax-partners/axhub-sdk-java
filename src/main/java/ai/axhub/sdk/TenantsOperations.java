@@ -66,6 +66,30 @@ public final class TenantsOperations {
   public CompletableFuture<Map<String, Object>> tenantsDeleteApiV1TenantsByTenantIDEmailDomainsByDomainAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("tenantsDeleteApiV1TenantsByTenantIDEmailDomainsByDomain", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> tenantsGetApiV1TenantsByTenantIDGroups(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsGetApiV1TenantsByTenantIDGroups", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsGetApiV1TenantsByTenantIDGroupsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsGetApiV1TenantsByTenantIDGroups", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> tenantsPostApiV1TenantsByTenantIDGroups(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsPostApiV1TenantsByTenantIDGroups", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsPostApiV1TenantsByTenantIDGroupsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsPostApiV1TenantsByTenantIDGroups", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> tenantsDeleteApiV1TenantsByTenantIDGroupsByGroupID(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsDeleteApiV1TenantsByTenantIDGroupsByGroupID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsDeleteApiV1TenantsByTenantIDGroupsByGroupIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsDeleteApiV1TenantsByTenantIDGroupsByGroupID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> tenantsPatchApiV1TenantsByTenantIDGroupsByGroupID(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsPatchApiV1TenantsByTenantIDGroupsByGroupID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsPatchApiV1TenantsByTenantIDGroupsByGroupIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsPatchApiV1TenantsByTenantIDGroupsByGroupID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> tenantsDeleteApiV1TenantsByTenantIDIcon(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("tenantsDeleteApiV1TenantsByTenantIDIcon", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
@@ -138,10 +162,40 @@ public final class TenantsOperations {
   public CompletableFuture<Map<String, Object>> tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDDeactivateAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDDeactivate", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> tenantsPatchApiV1TenantsByTenantIDMembersByMembershipIDGroup(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsPatchApiV1TenantsByTenantIDMembersByMembershipIDGroup", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsPatchApiV1TenantsByTenantIDMembersByMembershipIDGroupAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsPatchApiV1TenantsByTenantIDMembersByMembershipIDGroup", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDReactivate(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDReactivate", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public CompletableFuture<Map<String, Object>> tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDReactivateAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDReactivate", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDRestoreScim(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDRestoreScim", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDRestoreScimAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDRestoreScim", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> tenantsGetApiV1TenantsByTenantIDScimConnection(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsGetApiV1TenantsByTenantIDScimConnection", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsGetApiV1TenantsByTenantIDScimConnectionAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsGetApiV1TenantsByTenantIDScimConnection", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> tenantsDeleteApiV1TenantsByTenantIDScimToken(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsDeleteApiV1TenantsByTenantIDScimToken", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsDeleteApiV1TenantsByTenantIDScimTokenAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsDeleteApiV1TenantsByTenantIDScimToken", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> tenantsPostApiV1TenantsByTenantIDScimToken(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsPostApiV1TenantsByTenantIDScimToken", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsPostApiV1TenantsByTenantIDScimTokenAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsPostApiV1TenantsByTenantIDScimToken", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
 }
