@@ -126,40 +126,4 @@ public final class DataOperations {
   public CompletableFuture<Map<String, Object>> schemaDeleteApiV1MePersonalAccessTokensByPatIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("schemaDeleteApiV1MePersonalAccessTokensByPatID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
-  public Map<String, Object> schemaGetDataByTenantSlugByAppSlugByTable(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("schemaGetDataByTenantSlugByAppSlugByTable", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> schemaGetDataByTenantSlugByAppSlugByTableAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("schemaGetDataByTenantSlugByAppSlugByTable", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> schemaPostDataByTenantSlugByAppSlugByTable(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("schemaPostDataByTenantSlugByAppSlugByTable", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> schemaPostDataByTenantSlugByAppSlugByTableAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("schemaPostDataByTenantSlugByAppSlugByTable", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> schemaGetDataByTenantSlugByAppSlugByTableCount(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("schemaGetDataByTenantSlugByAppSlugByTableCount", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> schemaGetDataByTenantSlugByAppSlugByTableCountAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("schemaGetDataByTenantSlugByAppSlugByTableCount", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> schemaDeleteDataByTenantSlugByAppSlugByTableById(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("schemaDeleteDataByTenantSlugByAppSlugByTableById", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> schemaDeleteDataByTenantSlugByAppSlugByTableByIdAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("schemaDeleteDataByTenantSlugByAppSlugByTableById", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> schemaGetDataByTenantSlugByAppSlugByTableById(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("schemaGetDataByTenantSlugByAppSlugByTableById", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> schemaGetDataByTenantSlugByAppSlugByTableByIdAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("schemaGetDataByTenantSlugByAppSlugByTableById", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> schemaPatchDataByTenantSlugByAppSlugByTableById(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("schemaPatchDataByTenantSlugByAppSlugByTableById", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> schemaPatchDataByTenantSlugByAppSlugByTableByIdAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("schemaPatchDataByTenantSlugByAppSlugByTableById", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
 }
