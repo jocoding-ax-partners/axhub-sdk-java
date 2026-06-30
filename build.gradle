@@ -52,17 +52,8 @@ tasks.register('regressionTest', JavaExec) {
 }
 check.dependsOn regressionTest
 
-tasks.register('dataLayerTest', JavaExec) {
-  dependsOn sourceSets.test.runtimeClasspath
-  classpath = sourceSets.test.runtimeClasspath
-  mainClass = 'ai.axhub.sdk.DataLayerTest'
-}
-check.dependsOn dataLayerTest
-
 sourceSets { example { java.srcDir 'examples/test-app/src/main/java'; compileClasspath += sourceSets.main.output + configurations.runtimeClasspath; runtimeClasspath += output + compileClasspath } }
 tasks.register('testApp', JavaExec) { dependsOn 'compileExampleJava'; classpath = sourceSets.example.runtimeClasspath; mainClass = 'ai.axhub.sdk.example.App' }
 check.dependsOn testApp
-tasks.register('dataCrudDemo', JavaExec) { dependsOn 'compileExampleJava'; classpath = sourceSets.example.runtimeClasspath; mainClass = 'ai.axhub.sdk.example.DataCrudDemo' }
-check.dependsOn dataCrudDemo
 
 tasks.named('test') { enabled = false }

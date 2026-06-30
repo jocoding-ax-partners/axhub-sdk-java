@@ -20,7 +20,6 @@ public final class RegressionTest {
     OperationsCoverageTest.run();
     AllOperationsE2ETest.run();
     ConformanceRunner.run();
-    DataLayerTest.run();
     if ("1".equals(System.getenv("AXHUB_LIVE_ALL_METHODS"))) LiveAllOperationsE2ETest.run();
   }
   static void testAppsCreateConformance() throws Exception {

@@ -45,7 +45,6 @@ public final class AxHubClient {
   private final CostOperations cost;
   private final DataOperations data;
   private final DeploymentsOperations deployments;
-  private final ai.axhub.sdk.data.DataClient ergonomicData;
 
   private AxHubClient(Builder b) {
     this.baseUrl = trim(b.baseUrl == null ? "https://api.axhub.ai" : b.baseUrl);
@@ -66,7 +65,6 @@ public final class AxHubClient {
     this.cost = new CostOperations(this);
     this.data = new DataOperations(this);
     this.deployments = new DeploymentsOperations(this);
-    this.ergonomicData = new ai.axhub.sdk.data.DataClient(this);
   }
 
   public static Builder builder() { return new Builder(); }
@@ -80,10 +78,6 @@ public final class AxHubClient {
   public CostOperations cost() { return cost; }
   public DataOperations data() { return data; }
   public DeploymentsOperations deployments() { return deployments; }
-  /** Per-client ergonomic data layer (fluent CRUD + discover); owns the schema cache shared across all chains. */
-  public ai.axhub.sdk.data.DataClient ergonomicData() { return ergonomicData; }
-  /** Fluent entry: {@code client.tenant(t).app(a).data().table(name)}. */
-  public ai.axhub.sdk.data.TenantScope tenant(String tenantSlug) { return new ai.axhub.sdk.data.TenantScope(ergonomicData, tenantSlug); }
   public String baseUrl() { return baseUrl; }
   public String redactedToken() { return token == null || token.isBlank() ? "" : "***REDACTED***"; }
 
