@@ -187,6 +187,7 @@ public final class LiveDestructiveLifecycleTest {
       // --- explicit teardown (cleanup stack also covers on failure) ---
       must(client, "delete app", "appsDeleteApiV1AppsByAppID", Map.of("appID", appId), null);
       must(client, "permanent delete app", "appsDeleteApiV1AppsByAppIDPermanent", Map.of("appID", appId), null);
+      System.out.println("destructive lifecycle OK (app=" + appSlug + ")");
     } finally {
       // LIFO best-effort cleanup. Swallow Throwable so a cleanup error never masks the primary
       // failure — otherwise finally semantics would replace the in-flight exception and the run
@@ -200,7 +201,9 @@ public final class LiveDestructiveLifecycleTest {
   // must: member-mutable op that MUST succeed.
   private static Map<String, Object> must(AxHubClient c, String label, String opId, Map<String, String> pp, Object body) {
     try {
-      return c.request(opId, pp, Map.of(), body);
+      Map<String, Object> res = c.request(opId, pp, Map.of(), body);
+      System.out.println("  " + label + ": ok");
+      return res;
     } catch (AxHubException e) {
       throw new AssertionError("MUST " + label + " (" + opId + "): " + e.status() + " " + e.code() + " " + e.getMessage(), e);
     }
@@ -211,10 +214,12 @@ public final class LiveDestructiveLifecycleTest {
   private static void tolerate(AxHubClient c, String label, String opId, Map<String, String> pp, Object body, int... allowed) {
     try {
       c.request(opId, pp, Map.of(), body);
+      System.out.println("  " + label + ": ok (success)");
     } catch (AxHubException e) {
       if (!contains(allowed, e.status())) {
         throw new AssertionError("TOLERATE " + label + " (" + opId + "): status " + e.status() + " not in " + Arrays.toString(allowed) + " (" + e.code() + ")", e);
       }
+      System.out.println("  " + label + ": ok (tolerated " + e.status() + ")");
     }
   }
 
@@ -227,6 +232,7 @@ public final class LiveDestructiveLifecycleTest {
       if (!contains(allowed, e.status())) {
         throw new AssertionError("EXPECTFAIL " + label + " (" + opId + "): status " + e.status() + " not in " + Arrays.toString(allowed) + " (" + e.code() + ")", e);
       }
+      System.out.println("  " + label + ": ok (expected-fail " + e.status() + ")");
     }
   }
 
