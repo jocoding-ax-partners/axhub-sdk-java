@@ -32,12 +32,11 @@ export AXHUB_TENANT_SLUG="test"
 
 PAT mode is explicit: `TokenType.PAT` sends `X-Api-Key`. JWT mode is `TokenType.JWT` and sends `Authorization: Bearer`.
 
-## Agent quickstart: create a disposable app and table
+## Agent quickstart: create a disposable app and enable its database
 
 ```java
 import ai.axhub.sdk.AxHubClient;
 import ai.axhub.sdk.TokenType;
-import java.util.List;
 import java.util.Map;
 
 public class Main {
@@ -58,7 +57,6 @@ public class Main {
 
     String suffix = Long.toString(System.currentTimeMillis());
     String slug = "agent-java-" + suffix.substring(suffix.length() - 8);
-    String table = "items" + suffix.substring(suffix.length() - 6);
 
     Map<String, Object> app = client.apps().create(Map.of(
         "slug", slug,
@@ -71,21 +69,16 @@ public class Main {
     ));
     String appId = (String) app.get("id");
 
-    client.data().schemaPostApiV1AppsByAppIDTables(
-        Map.of("appID", appId),
-        Map.of(),
-        Map.of(
-            "table_name", table,
-            "owner_column", "owner_id",
-            "columns", List.of(
-                Map.of("name", "owner_id", "type", "uuid", "nullable", false),
-                Map.of("name", "title", "type", "text", "nullable", false),
-                Map.of("name", "status", "type", "text", "nullable", false)
-            )
-        )
-    );
+    // Enable raw DB mode: a dedicated Postgres role is issued and DATABASE_URL is
+    // injected into the app on its next deploy. The app then does row CRUD over
+    // direct SQL with its own pg driver.
+    client.request("appsPostApiV1AppsByAppIDRawDb", Map.of("appID", appId), Map.of(), Map.of());
 
-    System.out.println("created " + appId + " " + table);
+    // Admin introspection/browse of the physical DB.
+    Map<String, Object> tables = client.request(
+        "schemaGetApiV1AppsByAppIDDbTables", Map.of("appID", appId), Map.of(), null);
+
+    System.out.println("created " + appId + " " + tables);
   }
 }
 ```
@@ -94,7 +87,7 @@ public class Main {
 
 - High-level app create: `client.apps().create(body)` uses `defaultTenantId`.
 - Any route by operation id: `client.request(operationId, pathParams, query, body)`.
-- Generated facade: `client.data().schemaPostApiV1AppsByAppIDTables(pathParams, query, body)`.
+- Generated facade: `client.data().schemaGetApiV1AppsByAppIDDbTables(pathParams, query, body)`.
 - Async facade: every generated method has an `Async` sibling returning `CompletableFuture<Map<String,Object>>`.
 - Route inventory: `Routes.ALL`, `ContextRoutes.ALL`, and `ErrorCodes.ALL`.
 - Errors: catch `AxHubException` and branch on `code()`, `category()`, `status()`, and `retryable()`.
@@ -107,21 +100,15 @@ Use the high-level `apps.create` helper for the first app, then use generated op
 |------|--------------|----------------------|-------------------|
 | Create env var | `appsPostApiV1AppsByAppIDEnvVars` | `appID` | `env.list` includes `key` |
 | Delete env var | `appsDeleteApiV1AppsByAppIDEnvVarsByKey` | `appID`, `key` | `env.list` no longer includes `key` |
-| Create table | `schemaPostApiV1AppsByAppIDTables` | `appID` | response `tableName` equals requested name |
-| Inspect table | `schemaGetApiV1AppsByAppIDTablesByTableName` | `appID`, `tableName` | response `id` and `tableName` match |
-| Add column | `schemaPostApiV1AppsByAppIDTablesByTableNameColumns` | `appID`, `tableName` | inspect contains column name |
-| Drop column | `schemaDeleteApiV1AppsByAppIDTablesByTableNameColumnsByColumnName` | `appID`, `tableName`, `columnName` | inspect no longer contains column name |
-| Add table grant | `schemaPostApiV1AppsByAppIDTablesByTableNameGrants` | `appID`, `tableName` | response has grant `id` |
-| List grants | `schemaGetApiV1AppsByAppIDTablesByTableNameGrants` | `appID`, `tableName` | list contains grant `id` |
-| Revoke/delete grant | `schemaDeleteApiV1AppsByAppIDTablesByTableNameGrantsByGrantID` | `appID`, `tableName`, `grantID` | list still contains grant with `revokedAt` set |
-| Browse admin rows | `schemaGetApiV1AppsByAppIDTablesByTableNameRows` | `appID`, `tableName` | response has `rows` and `columns` arrays |
-| Delete table | `schemaDeleteApiV1AppsByAppIDTablesByTableName` | `appID`, `tableName` | follow-up inspect returns `404` or `410` |
+| Enable raw DB | `appsPostApiV1AppsByAppIDRawDb` | `appID` | dedicated Postgres role issued; `DATABASE_URL` injected on next deploy |
+| Disable raw DB | `appsDeleteApiV1AppsByAppIDRawDb` | `appID` | raw DB mode turned off (data preserved) |
+| List DB tables | `schemaGetApiV1AppsByAppIDDbTables` | `appID` | response lists physical `information_schema` tables |
+| Browse DB rows | `schemaGetApiV1AppsByAppIDDbTablesByTableRows` | `appID`, `table` | response has `rows` array |
 | Delete app | `appsDeleteApiV1AppsByAppID`, then `appsDeleteApiV1AppsByAppIDPermanent` | `appID` | app is soft-deleted, then permanently deleted |
 
 Important semantics from live QA:
 
-- Table delete is hard enough for client assertions: a follow-up table inspect returns `404 not_found` or `410`.
-- Table grant delete is a soft revoke: the grant can remain in `listGrants`, but the same grant id must have `revokedAt` set. Do not assert disappearance.
+- App database access is raw: `appsPostApiV1AppsByAppIDRawDb` issues a dedicated Postgres role and injects `DATABASE_URL` on the next deploy (the connection string is never returned). The app does its own row CRUD via direct SQL; the SDK exposes admin introspection/browse only (`schemaGetApiV1AppsByAppIDDbTables` / `...DbTablesByTableRows`).
 - Deployment creation without a connected git/bootstrap source can return a precondition-style 4xx. That verifies SDK error handling, not a deploy bug.
 
 
@@ -131,7 +118,7 @@ The SDK behavior documented here reflects live production QA against the AX Hub 
 
 - Tenant used for destructive QA: slug `test`, id `cc1e58f1-8e46-4ac7-96c1-190c4cdd5b70`.
 - Go, Java, Kotlin, Python, and Ruby each ran the generated all-operation sweep against 189 backend routes: SDK exceptions `0`, backend 5xx `0`.
-- Go, Java, Kotlin, Python, and Ruby each passed strict destructive DB QA: 22 live steps, 17 assertions, 7 cleanup calls. The flow created an app, env var, table, column, table grant, row, then updated, listed, counted, browsed, deleted, and re-read to prove deletion semantics.
+- Go, Java, Kotlin, Python, and Ruby each passed strict destructive DB QA: the flow exercised the raw-DB enable/reset lifecycle (instead of the removed dynamic-table flow), then deleted the app and re-read to prove deletion semantics.
 - Node ran the full production mutation suite and a real app bootstrap/deploy wait. Deployment id `d3a48ce3-0f9c-4bab-aa07-863c31c44460` finished `succeeded`, then the app was deleted permanently.
 
 Do not print tokens. Use short-lived PATs for agent QA and revoke them after the run.
