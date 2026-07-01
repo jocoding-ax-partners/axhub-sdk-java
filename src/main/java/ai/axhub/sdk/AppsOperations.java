@@ -66,6 +66,12 @@ public final class AppsOperations {
   public CompletableFuture<Map<String, Object>> appsGetApiV1AppsByAppIDAccessMeAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("appsGetApiV1AppsByAppIDAccessMe", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> appsPostApiV1AppsByAppIDArchive(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1AppsByAppIDArchive", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1AppsByAppIDArchiveAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1AppsByAppIDArchive", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> appsGetApiV1AppsByAppIDComments(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("appsGetApiV1AppsByAppIDComments", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
@@ -167,6 +173,12 @@ public final class AppsOperations {
   }
   public CompletableFuture<Map<String, Object>> appsPostApiV1AppsByAppIDRawDbAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("appsPostApiV1AppsByAppIDRawDb", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1AppsByAppIDReactivate(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1AppsByAppIDReactivate", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1AppsByAppIDReactivateAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1AppsByAppIDReactivate", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public Map<String, Object> appsPostApiV1AppsByAppIDResume(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("appsPostApiV1AppsByAppIDResume", RouteOperations.map(pathParams), RouteOperations.map(query), body);

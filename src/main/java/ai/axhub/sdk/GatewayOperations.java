@@ -54,11 +54,29 @@ public final class GatewayOperations {
   public CompletableFuture<Map<String, Object>> gatewayPostApiV1TenantsByTenantIDConnectorsByConnectorIDTestConnectionAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("gatewayPostApiV1TenantsByTenantIDConnectorsByConnectorIDTestConnection", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleFinalize(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleFinalize", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleFinalizeAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleFinalize", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleStart(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleStart", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleStartAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleStart", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> gatewayPostApiV1TenantsByTenantIDGatewayDocumentInvoke(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("gatewayPostApiV1TenantsByTenantIDGatewayDocumentInvoke", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public CompletableFuture<Map<String, Object>> gatewayPostApiV1TenantsByTenantIDGatewayDocumentInvokeAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("gatewayPostApiV1TenantsByTenantIDGatewayDocumentInvoke", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> gatewayPostApiV1TenantsByTenantIDGatewayFileInvoke(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("gatewayPostApiV1TenantsByTenantIDGatewayFileInvoke", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> gatewayPostApiV1TenantsByTenantIDGatewayFileInvokeAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("gatewayPostApiV1TenantsByTenantIDGatewayFileInvoke", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public Map<String, Object> gatewayPostApiV1TenantsByTenantIDGatewayInvoke(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("gatewayPostApiV1TenantsByTenantIDGatewayInvoke", RouteOperations.map(pathParams), RouteOperations.map(query), body);
@@ -101,5 +119,11 @@ public final class GatewayOperations {
   }
   public CompletableFuture<Map<String, Object>> configGetConfigPublicAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("configGetConfigPublic", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> gatewayGetOauthGoogleCallback(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("gatewayGetOauthGoogleCallback", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> gatewayGetOauthGoogleCallbackAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("gatewayGetOauthGoogleCallback", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
 }

@@ -180,6 +180,24 @@ public final class TenantsOperations {
   public CompletableFuture<Map<String, Object>> tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDRestoreScimAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("tenantsPostApiV1TenantsByTenantIDMembersByMembershipIDRestoreScim", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> tenantsDeleteApiV1TenantsByTenantIDMembersByUserIDSeat(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsDeleteApiV1TenantsByTenantIDMembersByUserIDSeat", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsDeleteApiV1TenantsByTenantIDMembersByUserIDSeatAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsDeleteApiV1TenantsByTenantIDMembersByUserIDSeat", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> tenantsPostApiV1TenantsByTenantIDMembersByUserIDSeat(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsPostApiV1TenantsByTenantIDMembersByUserIDSeat", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsPostApiV1TenantsByTenantIDMembersByUserIDSeatAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsPostApiV1TenantsByTenantIDMembersByUserIDSeat", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> tenantsGetApiV1TenantsByTenantIDMembersDirectory(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsGetApiV1TenantsByTenantIDMembersDirectory", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsGetApiV1TenantsByTenantIDMembersDirectoryAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsGetApiV1TenantsByTenantIDMembersDirectory", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> tenantsGetApiV1TenantsByTenantIDScimConnection(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("tenantsGetApiV1TenantsByTenantIDScimConnection", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
