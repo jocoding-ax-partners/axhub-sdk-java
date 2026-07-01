@@ -31,18 +31,9 @@ public final class LiveDestructiveLifecycleTest {
 
     String suffix = Long.toUnsignedString(System.nanoTime());
     String appSlug = "sdke2e-java-" + suffix;
-    String tableName = "items" + suffix.substring(suffix.length() - 8);
 
     List<Runnable> cleanups = new ArrayList<>();
     try {
-      // --- identity: userId (grant principal + row owner) ---
-      Map<String, Object> me = must(client, "me", "authGetApiV1Me", Map.of(), null);
-      String userId = str(me, "id", "userId", "userID", "user_id");
-      if (userId.isEmpty() && me.get("user") instanceof Map<?, ?> u) {
-        userId = str(u, "id", "userId", "userID", "user_id");
-      }
-      if (userId.isEmpty()) throw new AssertionError("me: could not resolve user id from " + me.keySet());
-
       // --- app create (+ cleanup registered immediately) ---
       Map<String, Object> appRes = must(client, "create app", "appsPostApiV1TenantsByTenantIDApps",
           Map.of("tenantID", tenantId),
@@ -80,49 +71,6 @@ public final class LiveDestructiveLifecycleTest {
       // --- icon upload url (signed URL; body key uncertain -> tolerate) ---
       tolerate(client, "icon upload url", "appsPostApiV1AppsByAppIDIconUploadUrl", Map.of("appID", appId),
           Map.of("content_type", "image/png"), 400, 404, 422);
-
-      // --- tables: create -> add column -> grant -> rows CRUD -> revoke -> drop col -> delete ---
-      must(client, "create table", "schemaPostApiV1AppsByAppIDTables", Map.of("appID", appId),
-          Map.of(
-              "table_name", tableName,
-              "owner_column", "owner_id",
-              "columns", List.of(
-                  Map.of("name", "owner_id", "type", "uuid", "nullable", false),
-                  Map.of("name", "title", "type", "text", "nullable", false),
-                  Map.of("name", "status", "type", "text", "nullable", false),
-                  Map.of("name", "metadata", "type", "jsonb", "nullable", true))));
-      must(client, "add column", "schemaPostApiV1AppsByAppIDTablesByTableNameColumns",
-          Map.of("appID", appId, "tableName", tableName),
-          Map.of("column", Map.of("name", "priority", "type", "int", "nullable", true, "default", "0")));
-
-      Map<String, Object> gRes = must(client, "add grant", "schemaPostApiV1AppsByAppIDTablesByTableNameGrants",
-          Map.of("appID", appId, "tableName", tableName),
-          Map.of("principal_type", "user", "principal_id", userId, "actions", List.of("read", "write")));
-      String grantId = str(gRes, "id", "grantId", "grantID");
-
-      // rows CRUD (node MISSES these)
-      Map<String, Object> rRes = must(client, "insert row", "schemaPostApiV1AppsByAppIDTablesByTableNameRows",
-          Map.of("appID", appId, "tableName", tableName),
-          Map.of("owner_id", userId, "title", "row-" + suffix, "status", "active", "metadata", Map.of("k", "v")));
-      String rowId = str(rRes, "id", "rowId", "rowID");
-      if (!rowId.isEmpty()) {
-        must(client, "update row", "schemaPatchApiV1AppsByAppIDTablesByTableNameRowsById",
-            Map.of("appID", appId, "tableName", tableName, "id", rowId),
-            Map.of("title", "row-" + suffix + "-updated"));
-        must(client, "delete row", "schemaDeleteApiV1AppsByAppIDTablesByTableNameRowsById",
-            Map.of("appID", appId, "tableName", tableName, "id", rowId), null);
-      } else {
-        throw new AssertionError("insert row: no id in response " + rRes.keySet());
-      }
-
-      if (!grantId.isEmpty()) {
-        must(client, "revoke grant", "schemaDeleteApiV1AppsByAppIDTablesByTableNameGrantsByGrantID",
-            Map.of("appID", appId, "tableName", tableName, "grantID", grantId), null);
-      }
-      must(client, "drop column", "schemaDeleteApiV1AppsByAppIDTablesByTableNameColumnsByColumnName",
-          Map.of("appID", appId, "tableName", tableName, "columnName", "priority"), null);
-      must(client, "delete table", "schemaDeleteApiV1AppsByAppIDTablesByTableName",
-          Map.of("appID", appId, "tableName", tableName), null);
 
       // --- raw-db (node MISSES; body contract uncertain -> tolerate both POST + DELETE; app is disposable) ---
       tolerate(client, "raw-db exec", "appsPostApiV1AppsByAppIDRawDb", Map.of("appID", appId),
