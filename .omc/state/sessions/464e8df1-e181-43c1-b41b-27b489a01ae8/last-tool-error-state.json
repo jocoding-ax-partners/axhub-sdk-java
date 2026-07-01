@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"S=/Users/wongil/Desktop/work/jocoding/sdk\\n# node tag (CI green, headSha match confirmed)\\ncd $S/axhub-sdk-node\\ngit tag -a v4.0.0 -m \\\"Release v4.0.0\\\" && git push origin v4.0.0 2>&1 | ta...",
+  "error": "Exit code 1\n(eval):12: parse error near `head'",
+  "timestamp": "2026-07-01T05:46:47.317Z",
+  "retry_count": 1
+}
