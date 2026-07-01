@@ -45,7 +45,6 @@ public final class AxHubClient {
   private final CostOperations cost;
   private final DataOperations data;
   private final DeploymentsOperations deployments;
-  private final ai.axhub.sdk.data.DataClient ergonomicData;
 
   private AxHubClient(Builder b) {
     this.baseUrl = trim(b.baseUrl == null ? "https://api.axhub.ai" : b.baseUrl);
@@ -66,7 +65,6 @@ public final class AxHubClient {
     this.cost = new CostOperations(this);
     this.data = new DataOperations(this);
     this.deployments = new DeploymentsOperations(this);
-    this.ergonomicData = new ai.axhub.sdk.data.DataClient(this);
   }
 
   public static Builder builder() { return new Builder(); }
@@ -80,10 +78,6 @@ public final class AxHubClient {
   public CostOperations cost() { return cost; }
   public DataOperations data() { return data; }
   public DeploymentsOperations deployments() { return deployments; }
-  /** Per-client ergonomic data layer (fluent CRUD + discover); owns the schema cache shared across all chains. */
-  public ai.axhub.sdk.data.DataClient ergonomicData() { return ergonomicData; }
-  /** Fluent entry: {@code client.tenant(t).app(a).data().table(name)}. */
-  public ai.axhub.sdk.data.TenantScope tenant(String tenantSlug) { return new ai.axhub.sdk.data.TenantScope(ergonomicData, tenantSlug); }
   public String baseUrl() { return baseUrl; }
   public String redactedToken() { return token == null || token.isBlank() ? "" : "***REDACTED***"; }
 
@@ -158,70 +152,6 @@ public final class AxHubClient {
 
   public CompletableFuture<Map<String, Object>> requestAsync(String operationId, Map<String, String> pathParams, Map<String, String> query, Object body) {
     return CompletableFuture.supplyAsync(() -> request(operationId, pathParams, query, body));
-  }
-
-  /**
-   * Raw-path transport for endpoints with no generated operation-id facade (the
-   * ergonomic data ring: dynamic CRUD + runtime schema discover). Mirrors the
-   * Python SDK's {@code request_raw}.
-   *
-   * <p>{@code path} is already fully substituted and percent-encoded by the
-   * caller. {@code query} values may be a {@code String} or a {@code List} of
-   * strings; list values expand into repeated query params (matching the
-   * where-serializer's repeated-column collapse). {@code camelize} defaults to
-   * {@code false} so row bodies and the list envelope ({@code has_more} /
-   * {@code per_page}) are returned verbatim, just like the node data transport;
-   * discover passes {@code camelize=true} for the inspect metadata payload.
-   */
-  public Map<String, Object> requestRaw(String method, String path, Map<String, ?> query, Object body, boolean camelize) {
-    String url = baseUrl + path;
-    String qs = encodeQuery(query);
-    if (!qs.isEmpty()) url += "?" + qs;
-    HttpRequest.Builder rb = HttpRequest.newBuilder(URI.create(url)).header("X-Request-ID", requestId());
-    if (token != null && !token.isBlank()) {
-      if (tokenType == TokenType.PAT) rb.header("X-Api-Key", token);
-      else if (tokenType == TokenType.JWT) rb.header("Authorization", "Bearer " + token);
-      else throw new AxHubException("validation", "required", "tokenType must be explicit", 0, false);
-    }
-    if (body != null) rb.header("Content-Type", "application/json");
-    String rawBody = body == null ? "" : GSON.toJson(body);
-    rb.method(method, body == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofString(rawBody));
-    try {
-      HttpResponse<String> res = http.send(rb.build(), HttpResponse.BodyHandlers.ofString());
-      if (res.statusCode() >= 300 && res.statusCode() < 400) {
-        Map<String, Object> redirect = new LinkedHashMap<>();
-        redirect.put("status", res.statusCode());
-        redirect.put("location", res.headers().firstValue("Location").orElse(null));
-        return redirect;
-      }
-      if (res.statusCode() >= 400) throw parseError(res.statusCode(), res.body());
-      Map<String, Object> parsed = Json.parseObject(res.body());
-      return camelize ? Json.camelize(parsed) : parsed;
-    } catch (IOException e) {
-      throw new AxHubException("network", "network_error", e.getMessage(), 0, true);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new AxHubException("network", "interrupted", e.getMessage(), 0, true);
-    }
-  }
-
-  private static String encodeQuery(Map<String, ?> query) {
-    if (query == null || query.isEmpty()) return "";
-    StringBuilder q = new StringBuilder();
-    for (var e : query.entrySet()) {
-      Object value = e.getValue();
-      if (value instanceof List<?> list) {
-        for (Object item : list) appendParam(q, e.getKey(), item);
-      } else {
-        appendParam(q, e.getKey(), value);
-      }
-    }
-    return q.toString();
-  }
-
-  private static void appendParam(StringBuilder q, String key, Object value) {
-    if (q.length() > 0) q.append('&');
-    q.append(enc(key)).append('=').append(enc(String.valueOf(value)));
   }
 
   private static AxHubException parseError(int status, String body) {

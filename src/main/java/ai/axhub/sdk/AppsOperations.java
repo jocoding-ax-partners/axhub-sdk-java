@@ -66,6 +66,12 @@ public final class AppsOperations {
   public CompletableFuture<Map<String, Object>> appsGetApiV1AppsByAppIDAccessMeAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("appsGetApiV1AppsByAppIDAccessMe", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> appsPostApiV1AppsByAppIDArchive(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1AppsByAppIDArchive", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1AppsByAppIDArchiveAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1AppsByAppIDArchive", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> appsGetApiV1AppsByAppIDComments(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("appsGetApiV1AppsByAppIDComments", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
@@ -95,6 +101,12 @@ public final class AppsOperations {
   }
   public CompletableFuture<Map<String, Object>> appsDeleteApiV1AppsByAppIDEnvVarsByKeyAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("appsDeleteApiV1AppsByAppIDEnvVarsByKey", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPutApiV1AppsByAppIDEnvVarsByKeyStagingValue(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPutApiV1AppsByAppIDEnvVarsByKeyStagingValue", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPutApiV1AppsByAppIDEnvVarsByKeyStagingValueAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPutApiV1AppsByAppIDEnvVarsByKeyStagingValue", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public Map<String, Object> appsPostApiV1AppsByAppIDIconDarkUploadUrl(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("appsPostApiV1AppsByAppIDIconDarkUploadUrl", RouteOperations.map(pathParams), RouteOperations.map(query), body);
@@ -149,6 +161,24 @@ public final class AppsOperations {
   }
   public CompletableFuture<Map<String, Object>> appsDeleteApiV1AppsByAppIDPermanentAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("appsDeleteApiV1AppsByAppIDPermanent", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsDeleteApiV1AppsByAppIDRawDb(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsDeleteApiV1AppsByAppIDRawDb", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsDeleteApiV1AppsByAppIDRawDbAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsDeleteApiV1AppsByAppIDRawDb", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1AppsByAppIDRawDb(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1AppsByAppIDRawDb", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1AppsByAppIDRawDbAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1AppsByAppIDRawDb", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1AppsByAppIDReactivate(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1AppsByAppIDReactivate", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1AppsByAppIDReactivateAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1AppsByAppIDReactivate", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public Map<String, Object> appsPostApiV1AppsByAppIDResume(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("appsPostApiV1AppsByAppIDResume", RouteOperations.map(pathParams), RouteOperations.map(query), body);
@@ -246,6 +276,12 @@ public final class AppsOperations {
   public CompletableFuture<Map<String, Object>> appsGetApiV1ReviewRequestsPendingAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("appsGetApiV1ReviewRequestsPending", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> appsGetApiV1StaticAuthStart(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsGetApiV1StaticAuthStart", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsGetApiV1StaticAuthStartAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsGetApiV1StaticAuthStart", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> appsGetApiV1Templates(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("appsGetApiV1Templates", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
@@ -263,6 +299,96 @@ public final class AppsOperations {
   }
   public CompletableFuture<Map<String, Object>> appsPostApiV1TenantsByTenantIDAppsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("appsPostApiV1TenantsByTenantIDApps", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsGetApiV1TenantsByTenantIDAppsByAppIDStaticReleases(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsGetApiV1TenantsByTenantIDAppsByAppIDStaticReleases", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsGetApiV1TenantsByTenantIDAppsByAppIDStaticReleasesAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsGetApiV1TenantsByTenantIDAppsByAppIDStaticReleases", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleases(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleases", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleases", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsDeleteApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseID(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsDeleteApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsDeleteApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsDeleteApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDActivate(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDActivate", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDActivateAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDActivate", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDFinalize(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDFinalize", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDFinalizeAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDFinalize", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDPromoteApprove(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDPromoteApprove", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDPromoteApproveAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDPromoteApprove", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDPromoteReject(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDPromoteReject", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDPromoteRejectAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDPromoteReject", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDPromoteRequest(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDPromoteRequest", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDPromoteRequestAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDPromoteRequest", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDRollback(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDRollback", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDRollbackAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDRollback", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDStage(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDStage", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDStageAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticReleasesByReleaseIDStage", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsGetApiV1TenantsByTenantIDAppsByAppIDStaticSite(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsGetApiV1TenantsByTenantIDAppsByAppIDStaticSite", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsGetApiV1TenantsByTenantIDAppsByAppIDStaticSiteAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsGetApiV1TenantsByTenantIDAppsByAppIDStaticSite", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPatchApiV1TenantsByTenantIDAppsByAppIDStaticSite(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPatchApiV1TenantsByTenantIDAppsByAppIDStaticSite", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPatchApiV1TenantsByTenantIDAppsByAppIDStaticSiteAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPatchApiV1TenantsByTenantIDAppsByAppIDStaticSite", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticSiteStagingDisable(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticSiteStagingDisable", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticSiteStagingDisableAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticSiteStagingDisable", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticSiteStagingEnable(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticSiteStagingEnable", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticSiteStagingEnableAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticSiteStagingEnable", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticSiteUnpublish(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticSiteUnpublish", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1TenantsByTenantIDAppsByAppIDStaticSiteUnpublishAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1TenantsByTenantIDAppsByAppIDStaticSiteUnpublish", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public Map<String, Object> appsGetApiV1TenantsByTenantIDAppsCheckAvailability(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("appsGetApiV1TenantsByTenantIDAppsCheckAvailability", RouteOperations.map(pathParams), RouteOperations.map(query), body);

@@ -36,6 +36,12 @@ public final class DeploymentsOperations {
   public CompletableFuture<Map<String, Object>> deployPostApiV1AppsByAppIDDeploymentsByDidRollbackAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("deployPostApiV1AppsByAppIDDeploymentsByDidRollback", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> deployGetApiV1AppsByAppIDDiagnosis(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("deployGetApiV1AppsByAppIDDiagnosis", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> deployGetApiV1AppsByAppIDDiagnosisAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("deployGetApiV1AppsByAppIDDiagnosis", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> deployDeleteApiV1AppsByAppIDGitConnection(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("deployDeleteApiV1AppsByAppIDGitConnection", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
@@ -60,6 +66,12 @@ public final class DeploymentsOperations {
   public CompletableFuture<Map<String, Object>> deployPostApiV1AppsByAppIDGitConnectionAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("deployPostApiV1AppsByAppIDGitConnection", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> deployPostApiV1AppsByAppIDGitGithubConnect(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("deployPostApiV1AppsByAppIDGitGithubConnect", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> deployPostApiV1AppsByAppIDGitGithubConnectAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("deployPostApiV1AppsByAppIDGitGithubConnect", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> deployGetApiV1AppsByAppIDGitGithubInstallStart(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("deployGetApiV1AppsByAppIDGitGithubInstallStart", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
@@ -71,6 +83,42 @@ public final class DeploymentsOperations {
   }
   public CompletableFuture<Map<String, Object>> deployGetApiV1AppsByAppIDLogsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("deployGetApiV1AppsByAppIDLogs", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> deployPostApiV1AppsByAppIDPromotionsByRequestIDRetry(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("deployPostApiV1AppsByAppIDPromotionsByRequestIDRetry", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> deployPostApiV1AppsByAppIDPromotionsByRequestIDRetryAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("deployPostApiV1AppsByAppIDPromotionsByRequestIDRetry", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> deployGetApiV1AppsByAppIDReleases(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("deployGetApiV1AppsByAppIDReleases", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> deployGetApiV1AppsByAppIDReleasesAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("deployGetApiV1AppsByAppIDReleases", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> deployGetApiV1AppsByAppIDReleasesPromotePreflight(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("deployGetApiV1AppsByAppIDReleasesPromotePreflight", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> deployGetApiV1AppsByAppIDReleasesPromotePreflightAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("deployGetApiV1AppsByAppIDReleasesPromotePreflight", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> deployDeleteApiV1AppsByAppIDStaging(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("deployDeleteApiV1AppsByAppIDStaging", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> deployDeleteApiV1AppsByAppIDStagingAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("deployDeleteApiV1AppsByAppIDStaging", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> deployPutApiV1AppsByAppIDStaging(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("deployPutApiV1AppsByAppIDStaging", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> deployPutApiV1AppsByAppIDStagingAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("deployPutApiV1AppsByAppIDStaging", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> deployPostApiV1GitGithubComplete(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("deployPostApiV1GitGithubComplete", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> deployPostApiV1GitGithubCompleteAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("deployPostApiV1GitGithubComplete", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public Map<String, Object> deployGetApiV1GithubAccounts(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("deployGetApiV1GithubAccounts", RouteOperations.map(pathParams), RouteOperations.map(query), body);

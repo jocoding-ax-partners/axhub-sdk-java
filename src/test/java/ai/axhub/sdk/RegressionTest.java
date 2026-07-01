@@ -20,7 +20,6 @@ public final class RegressionTest {
     OperationsCoverageTest.run();
     AllOperationsE2ETest.run();
     ConformanceRunner.run();
-    DataLayerTest.run();
     if ("1".equals(System.getenv("AXHUB_LIVE_ALL_METHODS"))) LiveAllOperationsE2ETest.run();
   }
   static void testAppsCreateConformance() throws Exception {
@@ -49,8 +48,8 @@ public final class RegressionTest {
     catch (AxHubException e) { require("tenant_id_required".equals(e.category()) && "tenant_id_required".equals(e.code()), "wrong error " + e); }
   }
   static void testErrorAndRouteCoverage() {
-    require(Routes.ALL.size() == 185, "route coverage drift " + Routes.ALL.size());
-    require(ErrorCodes.ALL.size() == 58, "error code drift " + ErrorCodes.ALL.size());
+    require(Routes.ALL.size() == 232, "route coverage drift " + Routes.ALL.size());
+    require(ErrorCodes.ALL.size() == 101, "error code drift " + ErrorCodes.ALL.size());
     require("conflict".equals(ErrorCodes.ALL.get("slug_taken").category()), "slug_taken category drift");
   }
   static void testNestedJsonAndErrorMetadata() throws Exception {
