@@ -140,7 +140,8 @@ public final class RegressionTest {
     try {
       AxHubClient client = AxHubClient.builder().baseUrl("http://127.0.0.1:" + server.getAddress().getPort()).token("pat_secret").tokenType(TokenType.PAT).build();
       Map<String,Object> got = client.request("authPostOauthToken", Map.of(), Map.of(), Map.of("grant_type", "client_credentials", "client_id", "cid"));
-      require("tok_java".equals(got.get("accessToken")), "oauth token response drift " + got);
+      // RFC 6749: token-style responses keep standard keys in snake_case.
+      require("tok_java".equals(got.get("access_token")) && got.get("accessToken") == null, "oauth token response drift " + got);
       require(seen[0] != null && seen[0].startsWith("application/x-www-form-urlencoded"), "oauth content type drift " + seen[0]);
       require(seen[1].contains("grant_type=client_credentials") && !seen[1].contains("{"), "oauth body was not form encoded " + seen[1]);
       Map<String,Object> redirect = client.request("authGetAuthGoogleOauth2Start", Map.of(), Map.of(), null);

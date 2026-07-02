@@ -29,6 +29,12 @@ public final class AxHubClient {
       "authPostOauthRevoke",
       "authPostOauthToken"
   );
+  // Token-style OAuth responses keep RFC 6749/8628 standard keys in snake_case.
+  // Must match the python SDK's _OAUTH_RESPONSE_SNAKE_CASE_OPERATIONS.
+  private static final Set<String> OAUTH_SNAKE_RESPONSE_OPERATIONS = Set.of(
+      "authPostOauthDeviceAuthorization",
+      "authPostOauthToken"
+  );
 
   private final String baseUrl;
   private final String token;
@@ -141,7 +147,8 @@ public final class AxHubClient {
         return redirect;
       }
       if (res.statusCode() >= 400) throw parseError(res.statusCode(), res.body());
-      return Json.camelize(Json.parseObject(res.body()));
+      Map<String, Object> parsed = Json.parseObject(res.body());
+      return OAUTH_SNAKE_RESPONSE_OPERATIONS.contains(operationId) ? Json.camelizeOauth(parsed) : Json.camelize(parsed);
     } catch (IOException e) {
       throw new AxHubException("network", "network_error", e.getMessage(), 0, true);
     } catch (InterruptedException e) {
@@ -219,6 +226,25 @@ public final class AxHubClient {
       Map<String, Object> out = new LinkedHashMap<>();
       for (var e : in.entrySet()) out.put(camel(e.getKey()), camelizeValue(e.getValue()));
       return out;
+    }
+    // RFC 6749 standard response keys preserved verbatim on OAuth token-style
+    // operations. Must match the python SDK's _OAUTH_RESPONSE_SNAKE_KEYS.
+    static final Set<String> OAUTH_RESPONSE_SNAKE_KEYS = Set.of(
+        "access_token", "token_type", "expires_in", "refresh_token",
+        "id_token", "scope", "resource", "tenant");
+    static Map<String, Object> camelizeOauth(Map<String, Object> in) {
+      Map<String, Object> out = new LinkedHashMap<>();
+      for (var e : in.entrySet()) {
+        String key = OAUTH_RESPONSE_SNAKE_KEYS.contains(e.getKey()) ? e.getKey() : camel(e.getKey());
+        out.put(key, camelizeOauthValue(e.getValue()));
+      }
+      return out;
+    }
+    @SuppressWarnings("unchecked")
+    static Object camelizeOauthValue(Object value) {
+      if (value instanceof Map<?, ?> m) return camelizeOauth((Map<String, Object>) m);
+      if (value instanceof List<?> list) return list.stream().map(Json::camelizeOauthValue).toList();
+      return value;
     }
     @SuppressWarnings("unchecked")
     static Object camelizeValue(Object value) {
