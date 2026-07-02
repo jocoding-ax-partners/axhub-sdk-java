@@ -17,24 +17,12 @@ import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public final class AxHubClient {
   private static final Gson GSON = new Gson();
   private static final Type MAP_TYPE = new TypeToken<LinkedHashMap<String, Object>>() {}.getType();
-  private static final Set<String> FORM_ENCODED_OPERATIONS = Set.of(
-      "authPostOauthDeviceAuthorization",
-      "authPostOauthRevoke",
-      "authPostOauthToken"
-  );
-  // Token-style OAuth responses keep RFC 6749/8628 standard keys in snake_case.
-  // Must match the python SDK's _OAUTH_RESPONSE_SNAKE_CASE_OPERATIONS.
-  private static final Set<String> OAUTH_SNAKE_RESPONSE_OPERATIONS = Set.of(
-      "authPostOauthDeviceAuthorization",
-      "authPostOauthToken"
-  );
 
   private final String baseUrl;
   private final String token;
@@ -48,7 +36,6 @@ public final class AxHubClient {
   private final AuthzOperations authz;
   private final AuditOperations audit;
   private final GatewayOperations gateway;
-  private final CostOperations cost;
   private final DataOperations data;
   private final DeploymentsOperations deployments;
 
@@ -68,7 +55,6 @@ public final class AxHubClient {
     this.authz = new AuthzOperations(this);
     this.audit = new AuditOperations(this);
     this.gateway = new GatewayOperations(this);
-    this.cost = new CostOperations(this);
     this.data = new DataOperations(this);
     this.deployments = new DeploymentsOperations(this);
   }
@@ -81,7 +67,6 @@ public final class AxHubClient {
   public AuthzOperations authz() { return authz; }
   public AuditOperations audit() { return audit; }
   public GatewayOperations gateway() { return gateway; }
-  public CostOperations cost() { return cost; }
   public DataOperations data() { return data; }
   public DeploymentsOperations deployments() { return deployments; }
   public String baseUrl() { return baseUrl; }
@@ -133,9 +118,9 @@ public final class AxHubClient {
       else if (tokenType == TokenType.JWT) rb.header("Authorization", "Bearer " + token);
       else throw new AxHubException("validation", "required", "tokenType must be explicit", 0, false);
     }
-    String rawBody = body == null ? "" : FORM_ENCODED_OPERATIONS.contains(operationId) ? formBody(body) : GSON.toJson(body);
+    String rawBody = body == null ? "" : GSON.toJson(body);
     if (body != null) {
-      rb.header("Content-Type", FORM_ENCODED_OPERATIONS.contains(operationId) ? "application/x-www-form-urlencoded" : "application/json");
+      rb.header("Content-Type", "application/json");
     }
     rb.method(route.method(), body == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofString(rawBody));
     try {
@@ -148,7 +133,7 @@ public final class AxHubClient {
       }
       if (res.statusCode() >= 400) throw parseError(res.statusCode(), res.body());
       Map<String, Object> parsed = Json.parseObject(res.body());
-      return OAUTH_SNAKE_RESPONSE_OPERATIONS.contains(operationId) ? Json.camelizeOauth(parsed) : Json.camelize(parsed);
+      return Json.camelize(parsed);
     } catch (IOException e) {
       throw new AxHubException("network", "network_error", e.getMessage(), 0, true);
     } catch (InterruptedException e) {
@@ -192,15 +177,6 @@ public final class AxHubClient {
   }
   private static String trim(String s) { return s.endsWith("/") ? s.substring(0, s.length() - 1) : s; }
   private static String enc(String s) { return URLEncoder.encode(s, StandardCharsets.UTF_8).replace("+", "%20"); }
-  private static String formBody(Object body) {
-    if (!(body instanceof Map<?, ?> map)) return "";
-    StringBuilder out = new StringBuilder();
-    for (var e : map.entrySet()) {
-      if (out.length() > 0) out.append('&');
-      out.append(enc(String.valueOf(e.getKey()))).append('=').append(enc(e.getValue() == null ? "" : String.valueOf(e.getValue())));
-    }
-    return out.toString();
-  }
   private static String requestId() { return (Instant.now().toEpochMilli() + UUID.randomUUID().toString().replace("-", "")).substring(0, 26); }
 
   static final class Json {
@@ -226,25 +202,6 @@ public final class AxHubClient {
       Map<String, Object> out = new LinkedHashMap<>();
       for (var e : in.entrySet()) out.put(camel(e.getKey()), camelizeValue(e.getValue()));
       return out;
-    }
-    // RFC 6749 standard response keys preserved verbatim on OAuth token-style
-    // operations. Must match the python SDK's _OAUTH_RESPONSE_SNAKE_KEYS.
-    static final Set<String> OAUTH_RESPONSE_SNAKE_KEYS = Set.of(
-        "access_token", "token_type", "expires_in", "refresh_token",
-        "id_token", "scope", "resource", "tenant");
-    static Map<String, Object> camelizeOauth(Map<String, Object> in) {
-      Map<String, Object> out = new LinkedHashMap<>();
-      for (var e : in.entrySet()) {
-        String key = OAUTH_RESPONSE_SNAKE_KEYS.contains(e.getKey()) ? e.getKey() : camel(e.getKey());
-        out.put(key, camelizeOauthValue(e.getValue()));
-      }
-      return out;
-    }
-    @SuppressWarnings("unchecked")
-    static Object camelizeOauthValue(Object value) {
-      if (value instanceof Map<?, ?> m) return camelizeOauth((Map<String, Object>) m);
-      if (value instanceof List<?> list) return list.stream().map(Json::camelizeOauthValue).toList();
-      return value;
     }
     @SuppressWarnings("unchecked")
     static Object camelizeValue(Object value) {

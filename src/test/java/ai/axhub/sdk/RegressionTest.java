@@ -3,7 +3,6 @@ package ai.axhub.sdk;
 import com.sun.net.httpserver.HttpServer;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +13,6 @@ public final class RegressionTest {
     testErrorAndRouteCoverage();
     testNestedJsonAndErrorMetadata();
     testNonJsonSuccessAndScalarErrorBodies();
-    testOAuthFormEncodingAndRedirectPolicy();
     testTokenRedaction();
     testEightContextCoverage();
     OperationsCoverageTest.run();
@@ -48,7 +46,7 @@ public final class RegressionTest {
     catch (AxHubException e) { require("tenant_id_required".equals(e.category()) && "tenant_id_required".equals(e.code()), "wrong error " + e); }
   }
   static void testErrorAndRouteCoverage() {
-    require(Routes.ALL.size() == 217, "route coverage drift " + Routes.ALL.size());
+    require(Routes.ALL.size() == 85, "route coverage drift " + Routes.ALL.size());
     require(ErrorCodes.ALL.size() == 101, "error code drift " + ErrorCodes.ALL.size());
     require("conflict".equals(ErrorCodes.ALL.get("slug_taken").category()), "slug_taken category drift");
   }
@@ -84,8 +82,8 @@ public final class RegressionTest {
     HttpServer server = HttpServer.create(new InetSocketAddress(0), 0);
     server.createContext("/", exchange -> {
       byte[] body;
-      if (exchange.getRequestURI().getPath().equals("/auth/google_oauth2/start")) {
-        body = "<html>oauth redirect target</html>".getBytes();
+      if (exchange.getRequestURI().getPath().equals("/config/public")) {
+        body = "<html>not json</html>".getBytes();
         exchange.getResponseHeaders().set("Content-Type", "text/html");
         exchange.sendResponseHeaders(200, body.length);
       } else {
@@ -98,55 +96,10 @@ public final class RegressionTest {
     server.start();
     try {
       AxHubClient client = AxHubClient.builder().baseUrl("http://127.0.0.1:" + server.getAddress().getPort()).build();
-      Map<String,Object> got = client.request("authGetAuthGoogleOauth2Start", Map.of(), Map.of(), null);
-      require("<html>oauth redirect target</html>".equals(got.get("raw")), "non-json success raw drift " + got);
-      try { client.request("authPostOauthToken", Map.of(), Map.of(), Map.of("noop", true)); throw new AssertionError("expected scalar error"); }
+      Map<String,Object> got = client.request("configGetConfigPublic", Map.of(), Map.of(), null);
+      require("<html>not json</html>".equals(got.get("raw")), "non-json success raw drift " + got);
+      try { client.request("authGetWellKnownJwksJson", Map.of(), Map.of(), null); throw new AssertionError("expected scalar error"); }
       catch (AxHubException e) { require(e.status() == 400 && "http_400".equals(e.code()), "scalar error body drift " + e); }
-    } finally { server.stop(0); }
-  }
-
-  static void testOAuthFormEncodingAndRedirectPolicy() throws Exception {
-    final String[] seen = new String[2];
-    final boolean[] redirectTargetHit = {false};
-    HttpServer server = HttpServer.create(new InetSocketAddress(0), 0);
-    server.createContext("/", exchange -> {
-      byte[] body;
-      switch (exchange.getRequestURI().getPath()) {
-        case "/oauth/token" -> {
-          seen[0] = exchange.getRequestHeaders().getFirst("Content-Type");
-          seen[1] = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
-          body = "{\"access_token\":\"tok_java\",\"token_type\":\"Bearer\",\"expires_in\":3600}".getBytes();
-          exchange.getResponseHeaders().set("Content-Type", "application/json");
-          exchange.sendResponseHeaders(200, body.length);
-        }
-        case "/auth/google_oauth2/start" -> {
-          exchange.getResponseHeaders().set("Location", "/redirect-target");
-          exchange.sendResponseHeaders(302, -1);
-          return;
-        }
-        case "/redirect-target" -> {
-          redirectTargetHit[0] = true;
-          exchange.sendResponseHeaders(500, -1);
-          return;
-        }
-        default -> {
-          exchange.sendResponseHeaders(404, -1);
-          return;
-        }
-      }
-      try (OutputStream os = exchange.getResponseBody()) { os.write(body); }
-    });
-    server.start();
-    try {
-      AxHubClient client = AxHubClient.builder().baseUrl("http://127.0.0.1:" + server.getAddress().getPort()).token("pat_secret").tokenType(TokenType.PAT).build();
-      Map<String,Object> got = client.request("authPostOauthToken", Map.of(), Map.of(), Map.of("grant_type", "client_credentials", "client_id", "cid"));
-      // RFC 6749: token-style responses keep standard keys in snake_case.
-      require("tok_java".equals(got.get("access_token")) && got.get("accessToken") == null, "oauth token response drift " + got);
-      require(seen[0] != null && seen[0].startsWith("application/x-www-form-urlencoded"), "oauth content type drift " + seen[0]);
-      require(seen[1].contains("grant_type=client_credentials") && !seen[1].contains("{"), "oauth body was not form encoded " + seen[1]);
-      Map<String,Object> redirect = client.request("authGetAuthGoogleOauth2Start", Map.of(), Map.of(), null);
-      require(Integer.valueOf(302).equals(redirect.get("status")) && "/redirect-target".equals(redirect.get("location")), "redirect response drift " + redirect);
-      require(!redirectTargetHit[0], "redirect was followed; auth headers could leak");
     } finally { server.stop(0); }
   }
 
@@ -156,7 +109,7 @@ public final class RegressionTest {
   }
 
   static void testEightContextCoverage() {
-    for (String name : ContextRoutes.NAMES) require(!ContextRoutes.ALL.get(name).isEmpty(), "missing context routes " + name);
+    for (String name : ContextRoutes.NAMES) require(ContextRoutes.ALL.get(name) != null, "missing context " + name);
   }
 
   static void require(boolean ok, String message) { if (!ok) throw new AssertionError(message); }

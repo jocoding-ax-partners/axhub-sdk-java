@@ -12,29 +12,11 @@ public final class GatewayOperations {
   public CompletableFuture<Map<String, Object>> gatewayGetApiV1TenantsByTenantIDConnectorsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("gatewayGetApiV1TenantsByTenantIDConnectors", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
-  public Map<String, Object> gatewayPostApiV1TenantsByTenantIDConnectors(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("gatewayPostApiV1TenantsByTenantIDConnectors", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> gatewayPostApiV1TenantsByTenantIDConnectorsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("gatewayPostApiV1TenantsByTenantIDConnectors", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> gatewayDeleteApiV1TenantsByTenantIDConnectorsByConnectorID(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("gatewayDeleteApiV1TenantsByTenantIDConnectorsByConnectorID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> gatewayDeleteApiV1TenantsByTenantIDConnectorsByConnectorIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("gatewayDeleteApiV1TenantsByTenantIDConnectorsByConnectorID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
   public Map<String, Object> gatewayGetApiV1TenantsByTenantIDConnectorsByConnectorID(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("gatewayGetApiV1TenantsByTenantIDConnectorsByConnectorID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public CompletableFuture<Map<String, Object>> gatewayGetApiV1TenantsByTenantIDConnectorsByConnectorIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("gatewayGetApiV1TenantsByTenantIDConnectorsByConnectorID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> gatewayPatchApiV1TenantsByTenantIDConnectorsByConnectorID(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("gatewayPatchApiV1TenantsByTenantIDConnectorsByConnectorID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> gatewayPatchApiV1TenantsByTenantIDConnectorsByConnectorIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("gatewayPatchApiV1TenantsByTenantIDConnectorsByConnectorID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public Map<String, Object> gatewayPostApiV1TenantsByTenantIDConnectorsByConnectorIDDiscover(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("gatewayPostApiV1TenantsByTenantIDConnectorsByConnectorIDDiscover", RouteOperations.map(pathParams), RouteOperations.map(query), body);
@@ -47,24 +29,6 @@ public final class GatewayOperations {
   }
   public CompletableFuture<Map<String, Object>> gatewayGetApiV1TenantsByTenantIDConnectorsByConnectorIDResourcesAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("gatewayGetApiV1TenantsByTenantIDConnectorsByConnectorIDResources", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> gatewayPostApiV1TenantsByTenantIDConnectorsByConnectorIDTestConnection(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("gatewayPostApiV1TenantsByTenantIDConnectorsByConnectorIDTestConnection", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> gatewayPostApiV1TenantsByTenantIDConnectorsByConnectorIDTestConnectionAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("gatewayPostApiV1TenantsByTenantIDConnectorsByConnectorIDTestConnection", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleFinalize(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleFinalize", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleFinalizeAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleFinalize", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public Map<String, Object> gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleStart(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.request("gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleStart", RouteOperations.map(pathParams), RouteOperations.map(query), body);
-  }
-  public CompletableFuture<Map<String, Object>> gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleStartAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
-    return c.requestAsync("gatewayPostApiV1TenantsByTenantIDConnectorsOauthGoogleStart", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
   public Map<String, Object> gatewayPostApiV1TenantsByTenantIDGatewayDocumentInvoke(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("gatewayPostApiV1TenantsByTenantIDGatewayDocumentInvoke", RouteOperations.map(pathParams), RouteOperations.map(query), body);

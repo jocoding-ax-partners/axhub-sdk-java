@@ -16,7 +16,7 @@ final class AllOperationsE2ETest {
   private static final Pattern PATH_PARAM_PATTERN = Pattern.compile("\\{([^}]+)\\}");
 
   static void run() throws Exception {
-    require(Routes.ALL.size() == 217, "route coverage drift " + Routes.ALL.size());
+    require(Routes.ALL.size() == 85, "route coverage drift " + Routes.ALL.size());
     AtomicInteger expectedIndex = new AtomicInteger();
     HttpServer server = HttpServer.create(new InetSocketAddress(0), 0);
     server.createContext("/", exchange -> {
@@ -40,7 +40,7 @@ final class AllOperationsE2ETest {
       AxHubClient client = AxHubClient.builder().baseUrl("http://127.0.0.1:" + server.getAddress().getPort()).token("pat_e2e").tokenType(TokenType.PAT).build();
       Map<String, Object> contexts = Map.of(
         "apps", client.appsRoutes(), "identity", client.identity(), "tenants", client.tenants(), "authz", client.authz(),
-        "audit", client.audit(), "gateway", client.gateway(), "cost", client.cost(), "data", client.data(), "deployments", client.deployments()
+        "audit", client.audit(), "gateway", client.gateway(), "data", client.data(), "deployments", client.deployments()
       );
       for (Route route : Routes.ALL) {
         Object context = contexts.get(ContextRoutes.contextName(route));
