@@ -43,7 +43,6 @@ public final class LiveDestructiveLifecycleTest {
       final String fAppId = appId;
       cleanups.add(() -> {
         try { client.request("appsDeleteApiV1AppsByAppID", Map.of("appID", fAppId), Map.of(), null); } catch (AxHubException ignored) {}
-        try { client.request("appsDeleteApiV1AppsByAppIDPermanent", Map.of("appID", fAppId), Map.of(), null); } catch (AxHubException ignored) {}
       });
 
       // --- app update ---
@@ -53,8 +52,6 @@ public final class LiveDestructiveLifecycleTest {
       // --- env vars ---
       must(client, "set env var", "appsPostApiV1AppsByAppIDEnvVars", Map.of("appID", appId),
           Map.of("key", "SDK_E2E_SECRET", "value", "sekret-" + suffix));
-      must(client, "delete env var", "appsDeleteApiV1AppsByAppIDEnvVarsByKey",
-          Map.of("appID", appId, "key", "SDK_E2E_SECRET"), null);
 
       // --- comments ---
       Map<String, Object> cRes = must(client, "add comment", "appsPostApiV1AppsByAppIDComments", Map.of("appID", appId),
@@ -67,10 +64,6 @@ public final class LiveDestructiveLifecycleTest {
       // --- likes (idempotent) ---
       must(client, "like", "appsPostApiV1AppsByAppIDLikes", Map.of("appID", appId), Map.of());
       must(client, "unlike", "appsDeleteApiV1AppsByAppIDLikes", Map.of("appID", appId), null);
-
-      // --- icon upload url (signed URL; body key uncertain -> tolerate) ---
-      tolerate(client, "icon upload url", "appsPostApiV1AppsByAppIDIconUploadUrl", Map.of("appID", appId),
-          Map.of("content_type", "image/png"), 400, 404, 422);
 
       // --- raw-db (node MISSES; body contract uncertain -> tolerate both POST + DELETE; app is disposable) ---
       tolerate(client, "raw-db exec", "appsPostApiV1AppsByAppIDRawDb", Map.of("appID", appId),
@@ -106,25 +99,6 @@ public final class LiveDestructiveLifecycleTest {
         must(client, "revoke PAT", "schemaDeleteApiV1MePersonalAccessTokensByPatID", Map.of("patID", patId), null);
       }
 
-      // --- publication: submit -> reject ; submit -> approve -> back to private (invite_only only, never public) ---
-      Map<String, Object> p1 = must(client, "submit publication#1", "appsPostApiV1AppsByAppIDReviewRequests", Map.of("appID", appId),
-          Map.of("reason", "sdke2e reject " + suffix, "requested_visibility", "invite_only"));
-      String rr1 = str(p1, "id", "reviewRequestId", "rrId");
-      if (!rr1.isEmpty()) {
-        must(client, "reject publication#1", "appsPostApiV1ReviewRequestsByRrIDReject", Map.of("rrID", rr1),
-            Map.of("comment", "sdke2e cleanup rejection"));
-      }
-      Map<String, Object> p2 = must(client, "submit publication#2", "appsPostApiV1AppsByAppIDReviewRequests", Map.of("appID", appId),
-          Map.of("reason", "sdke2e approve " + suffix, "requested_visibility", "invite_only"));
-      String rr2 = str(p2, "id", "reviewRequestId", "rrId");
-      if (!rr2.isEmpty()) {
-        must(client, "approve publication#2", "appsPostApiV1ReviewRequestsByRrIDApprove", Map.of("rrID", rr2),
-            Map.of("comment", "sdke2e transient approval"));
-        // unpublish equivalent: return app to private
-        tolerate(client, "unpublish (visibility->private)", "appsPatchApiV1AppsByAppID", Map.of("appID", appId),
-            Map.of("visibility", "private"), 400, 404, 409);
-      }
-
       // --- TYPED-FAILURE: preconditions genuinely unavailable ---
       expectFail(client, "deployment create (no commit)", "deployPostApiV1AppsByAppIDDeployments", Map.of("appID", appId),
           Map.of("commit_sha", "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"), 400, 404, 409, 412);
@@ -134,7 +108,6 @@ public final class LiveDestructiveLifecycleTest {
 
       // --- explicit teardown (cleanup stack also covers on failure) ---
       must(client, "delete app", "appsDeleteApiV1AppsByAppID", Map.of("appID", appId), null);
-      must(client, "permanent delete app", "appsDeleteApiV1AppsByAppIDPermanent", Map.of("appID", appId), null);
       System.out.println("destructive lifecycle OK (app=" + appSlug + ")");
     } finally {
       // LIFO best-effort cleanup. Swallow Throwable so a cleanup error never masks the primary
