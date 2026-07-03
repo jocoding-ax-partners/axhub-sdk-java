@@ -18,4 +18,10 @@ public final class TenantsOperations {
   public CompletableFuture<Map<String, Object>> tenantsGetApiV1TenantsByTenantIDAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("tenantsGetApiV1TenantsByTenantID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> tenantsGetApiV1TenantsByTenantIDOrgDirectory(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("tenantsGetApiV1TenantsByTenantIDOrgDirectory", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> tenantsGetApiV1TenantsByTenantIDOrgDirectoryAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("tenantsGetApiV1TenantsByTenantIDOrgDirectory", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
 }

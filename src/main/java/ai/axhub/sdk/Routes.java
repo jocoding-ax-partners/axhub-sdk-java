@@ -82,6 +82,7 @@ public final class Routes { private Routes() {} public static final List<Route> 
   new Route("GET", "/api/v1/tenants/{tenantID}/me/connectors", "Gateway", "gatewayGetApiV1TenantsByTenantIDMeConnectors"),
   new Route("GET", "/api/v1/tenants/{tenantID}/me/connectors/{connectorID}/resources", "Gateway", "gatewayGetApiV1TenantsByTenantIDMeConnectorsByConnectorIDResources"),
   new Route("GET", "/api/v1/tenants/{tenantID}/me/grants", "Authorization", "authorizationGetApiV1TenantsByTenantIDMeGrants"),
+  new Route("GET", "/api/v1/tenants/{tenantID}/org-directory", "Tenants", "tenantsGetApiV1TenantsByTenantIDOrgDirectory"),
   new Route("GET", "/api/v1/users/me/apps", "Apps", "appsGetApiV1UsersMeApps"),
   new Route("POST", "/auth/logout", "Auth", "authPostAuthLogout"),
   new Route("POST", "/auth/refresh", "Auth", "authPostAuthRefresh"),

@@ -46,8 +46,8 @@ public final class RegressionTest {
     catch (AxHubException e) { require("tenant_id_required".equals(e.category()) && "tenant_id_required".equals(e.code()), "wrong error " + e); }
   }
   static void testErrorAndRouteCoverage() {
-    require(Routes.ALL.size() == 85, "route coverage drift " + Routes.ALL.size());
-    require(ErrorCodes.ALL.size() == 101, "error code drift " + ErrorCodes.ALL.size());
+    require(Routes.ALL.size() == 86, "route coverage drift " + Routes.ALL.size());
+    require(ErrorCodes.ALL.size() == 106, "error code drift " + ErrorCodes.ALL.size());
     require("conflict".equals(ErrorCodes.ALL.get("slug_taken").category()), "slug_taken category drift");
   }
   static void testNestedJsonAndErrorMetadata() throws Exception {
