@@ -27,7 +27,6 @@ final class LiveAllOperationsE2ETest {
   );
   private static final Map<String, Boolean> HIGH_RISK_APP_OPS = Map.of(
       "appsDeleteApiV1AppsByAppID", true,
-      "appsDeleteApiV1AppsByAppIDPermanent", true,
       "deployPostApiV1AppsByAppIDDeploymentsByDidCancel", true,
       "deployPostApiV1AppsByAppIDDeploymentsByDidRollback", true
   );
@@ -90,9 +89,7 @@ final class LiveAllOperationsE2ETest {
       }
     } finally {
       if (createdFixture && fixture.get("appID") != null) {
-        for (String operationId : List.of("appsDeleteApiV1AppsByAppID", "appsDeleteApiV1AppsByAppIDPermanent")) {
-          try { client.request(operationId, Map.of("appID", fixture.get("appID")), Map.of(), null); } catch (AxHubException ignored) {}
-        }
+        try { client.request("appsDeleteApiV1AppsByAppID", Map.of("appID", fixture.get("appID")), Map.of(), null); } catch (AxHubException ignored) {}
       }
     }
 
