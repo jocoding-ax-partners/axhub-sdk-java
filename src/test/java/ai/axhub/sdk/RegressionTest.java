@@ -17,6 +17,7 @@ public final class RegressionTest {
     testEightContextCoverage();
     OperationsCoverageTest.run();
     AllOperationsE2ETest.run();
+    RawDbTest.run();
     ConformanceRunner.run();
     if ("1".equals(System.getenv("AXHUB_LIVE_ALL_METHODS"))) LiveAllOperationsE2ETest.run();
   }

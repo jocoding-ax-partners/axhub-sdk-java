@@ -96,6 +96,7 @@ public final class AxHubClient {
     public CompletableFuture<Map<String, Object>> createAsync(Map<String, ?> body) {
       return CompletableFuture.supplyAsync(() -> create(body));
     }
+    public RawDbClient rawDb() { return new RawDbClient(c); }
   }
 
   public Map<String, Object> request(String operationId, Map<String, String> pathParams, Map<String, String> query, Object body) {
