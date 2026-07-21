@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public final class ContextRoutes {
   private ContextRoutes() {}
-  public static final List<String> NAMES = List.of("apps", "identity", "tenants", "authz", "audit", "gateway", "data", "deployments");
+  public static final List<String> NAMES = List.of("apps", "identity", "tenants", "authz", "audit", "gateway", "data", "deployments", "notifications");
   public static final Map<String, List<Route>> ALL = NAMES.stream().collect(Collectors.toUnmodifiableMap(name -> name, name -> Routes.ALL.stream().filter(route -> contextName(route).equals(name)).toList()));
 
   public static String contextName(Route route) {
@@ -19,6 +19,7 @@ public final class ContextRoutes {
       case "Gateway", "Config" -> "gateway";
       case "Schema" -> "data";
       case "Deploy", "deploy" -> "deployments";
+      case "Notifications" -> "notifications";
       default -> throw new IllegalArgumentException("unmapped route tag: " + route.tag());
     };
   }

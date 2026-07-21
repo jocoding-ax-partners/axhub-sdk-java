@@ -30,6 +30,12 @@ public final class DeploymentsOperations {
   public CompletableFuture<Map<String, Object>> deployPostApiV1AppsByAppIDDeploymentsByDidCancelAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.requestAsync("deployPostApiV1AppsByAppIDDeploymentsByDidCancel", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
+  public Map<String, Object> deployGetApiV1AppsByAppIDDeploymentsByDidDiagnoses(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("deployGetApiV1AppsByAppIDDeploymentsByDidDiagnoses", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> deployGetApiV1AppsByAppIDDeploymentsByDidDiagnosesAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("deployGetApiV1AppsByAppIDDeploymentsByDidDiagnoses", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> deployPostApiV1AppsByAppIDDeploymentsByDidRollback(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("deployPostApiV1AppsByAppIDDeploymentsByDidRollback", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }

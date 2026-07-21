@@ -40,7 +40,8 @@ final class AllOperationsE2ETest {
       AxHubClient client = AxHubClient.builder().baseUrl("http://127.0.0.1:" + server.getAddress().getPort()).token("pat_e2e").tokenType(TokenType.PAT).build();
       Map<String, Object> contexts = Map.of(
         "apps", client.appsRoutes(), "identity", client.identity(), "tenants", client.tenants(), "authz", client.authz(),
-        "audit", client.audit(), "gateway", client.gateway(), "data", client.data(), "deployments", client.deployments()
+        "audit", client.audit(), "gateway", client.gateway(), "data", client.data(), "deployments", client.deployments(),
+        "notifications", client.notifications()
       );
       for (Route route : Routes.ALL) {
         Object context = contexts.get(ContextRoutes.contextName(route));

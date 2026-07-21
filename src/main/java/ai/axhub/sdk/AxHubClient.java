@@ -38,6 +38,7 @@ public final class AxHubClient {
   private final GatewayOperations gateway;
   private final DataOperations data;
   private final DeploymentsOperations deployments;
+  private final NotificationsOperations notifications;
 
   private AxHubClient(Builder b) {
     this.baseUrl = trim(b.baseUrl == null ? "https://api.axhub.ai" : b.baseUrl);
@@ -57,6 +58,7 @@ public final class AxHubClient {
     this.gateway = new GatewayOperations(this);
     this.data = new DataOperations(this);
     this.deployments = new DeploymentsOperations(this);
+    this.notifications = new NotificationsOperations(this);
   }
 
   public static Builder builder() { return new Builder(); }
@@ -69,6 +71,7 @@ public final class AxHubClient {
   public GatewayOperations gateway() { return gateway; }
   public DataOperations data() { return data; }
   public DeploymentsOperations deployments() { return deployments; }
+  public NotificationsOperations notifications() { return notifications; }
   public String baseUrl() { return baseUrl; }
   public String redactedToken() { return token == null || token.isBlank() ? "" : "***REDACTED***"; }
 

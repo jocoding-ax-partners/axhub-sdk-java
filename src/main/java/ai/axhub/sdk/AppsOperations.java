@@ -6,6 +6,30 @@ import java.util.concurrent.CompletableFuture;
 public final class AppsOperations {
   private final AxHubClient c;
   AppsOperations(AxHubClient c) { this.c = c; }
+  public Map<String, Object> appsGetApiV1AccessRequests(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsGetApiV1AccessRequests", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsGetApiV1AccessRequestsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsGetApiV1AccessRequests", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPostApiV1AccessRequests(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPostApiV1AccessRequests", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPostApiV1AccessRequestsAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPostApiV1AccessRequests", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPatchApiV1AccessRequestsByIdApprove(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPatchApiV1AccessRequestsByIdApprove", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPatchApiV1AccessRequestsByIdApproveAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPatchApiV1AccessRequestsByIdApprove", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public Map<String, Object> appsPatchApiV1AccessRequestsByIdReject(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.request("appsPatchApiV1AccessRequestsByIdReject", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
+  public CompletableFuture<Map<String, Object>> appsPatchApiV1AccessRequestsByIdRejectAsync(Map<String, String> pathParams, Map<String, String> query, Object body) {
+    return c.requestAsync("appsPatchApiV1AccessRequestsByIdReject", RouteOperations.map(pathParams), RouteOperations.map(query), body);
+  }
   public Map<String, Object> appsDeleteApiV1AppsByAppID(Map<String, String> pathParams, Map<String, String> query, Object body) {
     return c.request("appsDeleteApiV1AppsByAppID", RouteOperations.map(pathParams), RouteOperations.map(query), body);
   }
