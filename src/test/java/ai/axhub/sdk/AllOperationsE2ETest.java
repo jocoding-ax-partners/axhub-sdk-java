@@ -16,7 +16,7 @@ final class AllOperationsE2ETest {
   private static final Pattern PATH_PARAM_PATTERN = Pattern.compile("\\{([^}]+)\\}");
 
   static void run() throws Exception {
-    require(Routes.ALL.size() == 87, "route coverage drift " + Routes.ALL.size());
+    require(Routes.ALL.size() == 97, "route coverage drift " + Routes.ALL.size());
     AtomicInteger expectedIndex = new AtomicInteger();
     HttpServer server = HttpServer.create(new InetSocketAddress(0), 0);
     server.createContext("/", exchange -> {
