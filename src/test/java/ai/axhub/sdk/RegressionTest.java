@@ -48,7 +48,7 @@ public final class RegressionTest {
   }
   static void testErrorAndRouteCoverage() {
     require(Routes.ALL.size() == 97, "route coverage drift " + Routes.ALL.size());
-    require(ErrorCodes.ALL.size() == 132, "error code drift " + ErrorCodes.ALL.size());
+    require(ErrorCodes.ALL.size() == 133, "error code drift " + ErrorCodes.ALL.size());
     require("conflict".equals(ErrorCodes.ALL.get("slug_taken").category()), "slug_taken category drift");
   }
   static void testNestedJsonAndErrorMetadata() throws Exception {

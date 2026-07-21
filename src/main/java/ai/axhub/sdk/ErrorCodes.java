@@ -116,6 +116,7 @@ public final class ErrorCodes { private ErrorCodes() {} public static final Map<
   Map.entry("slug_taken", new ErrorInfo("conflict", 409, false)),
   Map.entry("staging_already_enabled", new ErrorInfo("conflict", 409, false)),
   Map.entry("staging_mismatch", new ErrorInfo("precondition_failed", 412, false)),
+  Map.entry("staging_namespace_too_long", new ErrorInfo("precondition_failed", 412, false)),
   Map.entry("staging_not_enabled", new ErrorInfo("precondition_failed", 412, false)),
   Map.entry("staging_required", new ErrorInfo("precondition_failed", 412, false)),
   Map.entry("static_release_in_use", new ErrorInfo("conflict", 409, false)),
